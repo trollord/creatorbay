@@ -15,8 +15,11 @@ interface StackedCardsProps {
 
 const CARD_STEP = 500;
 const DEAD_ZONE = 400;
-const CARD_H = 560;
-const SLIDE_DIST = CARD_H + 40;
+// Responsive card height — set dynamically after mount
+const CARD_H_MOBILE = 460;
+const CARD_H_DESKTOP = 560;
+const SLIDE_DIST_MOBILE = CARD_H_MOBILE + 40;
+const SLIDE_DIST_DESKTOP = CARD_H_DESKTOP + 40;
 
 const STAIRCASE_TOP = 20;
 const DEPTH_SCALE = 0.08;
@@ -47,6 +50,17 @@ const CARD_ACCENT_COLORS = [
 export default function StackedCards({ cards }: StackedCardsProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [progress, setProgress] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check, { passive: true });
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  const CARD_H = isMobile ? CARD_H_MOBILE : CARD_H_DESKTOP;
+  const SLIDE_DIST = isMobile ? SLIDE_DIST_MOBILE : SLIDE_DIST_DESKTOP;
 
   const handleScroll = useCallback(() => {
     const container = containerRef.current;
@@ -70,7 +84,7 @@ export default function StackedCards({ cards }: StackedCardsProps) {
   return (
     <div ref={containerRef} className="relative w-full" style={{ height: `${scrollHeight}px` }}>
       <div
-        className="sticky top-28 w-full"
+        className="sticky top-20 md:top-28 w-full"
         style={{ height: `${CARD_H}px`, perspective: "1200px", perspectiveOrigin: "50% 30%" }}
       >
         {cards.map((card, i) => {
@@ -120,7 +134,7 @@ export default function StackedCards({ cards }: StackedCardsProps) {
               }}
             >
               <div
-                className="w-full h-full rounded-2xl p-10 sm:p-12 flex flex-col justify-between overflow-hidden relative"
+                className="w-full h-full rounded-2xl p-6 sm:p-8 md:p-10 flex flex-col justify-between overflow-hidden relative"
                 style={{
                   background: CARD_COLORS[i % CARD_COLORS.length],
                   boxShadow: `${topShadow !== "none" ? topShadow + ", " : ""}${bottomShadow}`,
@@ -149,7 +163,7 @@ export default function StackedCards({ cards }: StackedCardsProps) {
 
                 {/* Card number watermark */}
                 <div className="absolute top-8 right-10 pointer-events-none">
-                  <span className="text-8xl font-black leading-none" style={{ color: `${accentColor}08` }}>
+                  <span className="text-6xl sm:text-8xl font-black leading-none" style={{ color: `${accentColor}08` }}>
                     {String(i + 1).padStart(2, "0")}
                   </span>
                 </div>
@@ -169,7 +183,7 @@ export default function StackedCards({ cards }: StackedCardsProps) {
                   >
                     {card.label}
                   </span>
-                  <h3 className="text-white text-2xl sm:text-3xl font-bold tracking-tight mb-4 leading-tight">
+                  <h3 className="text-white text-xl sm:text-2xl md:text-3xl font-bold tracking-tight mb-3 leading-tight">
                     {card.title}
                   </h3>
                   <div className="h-px w-16 mb-5" style={{ background: `${accentColor}30` }} />

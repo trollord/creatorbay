@@ -79,7 +79,7 @@ export default function ContactPage() {
   return (
     <>
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
-      <section className="relative pt-40 pb-16 px-6 overflow-hidden text-center">
+      <section className="relative pt-28 md:pt-40 pb-12 md:pb-16 px-5 md:px-6 overflow-hidden text-center">
         <div className="absolute inset-0 pointer-events-none">
           <div
             className="absolute w-[500px] h-[500px] rounded-full"
@@ -111,7 +111,7 @@ export default function ContactPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="text-5xl md:text-7xl font-black tracking-tight leading-[0.95] mb-6"
+            className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tight leading-[1] md:leading-[0.95] mb-6"
           >
             Let&apos;s Build
             <br />
@@ -141,7 +141,7 @@ export default function ContactPage() {
       </section>
 
       {/* ── Form + Contact ────────────────────────────────────────────────── */}
-      <section className="py-16 px-6 pb-32">
+      <section className="py-10 md:py-16 px-5 md:px-6 pb-16 md:pb-24">
         <div className="max-w-5xl mx-auto grid lg:grid-cols-5 gap-12">
           {/* Form */}
           <div className="lg:col-span-3">

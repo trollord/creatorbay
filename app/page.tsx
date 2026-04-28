@@ -182,7 +182,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-[0.95] tracking-tight mb-6 text-balance"
+            className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black leading-[1] md:leading-[0.95] tracking-tight mb-6 text-balance"
           >
             We Turn{" "}
             <span
@@ -231,7 +231,7 @@ export default function Home() {
           >
             <Link
               href="/contact"
-              className="group flex items-center gap-2 px-7 py-4 rounded-full text-sm font-semibold text-white transition-all duration-300 hover:shadow-[0_0_30px_rgba(139,92,246,0.4)] hover:scale-105"
+              className="group flex items-center justify-center gap-2 w-full sm:w-auto px-7 py-4 rounded-full text-sm font-semibold text-white transition-all duration-300 hover:shadow-[0_0_30px_rgba(139,92,246,0.4)] hover:scale-105"
               style={{ background: "linear-gradient(135deg, #8b5cf6, #ec4899)" }}
             >
               Work With Us
@@ -239,7 +239,7 @@ export default function Home() {
             </Link>
             <Link
               href="/services"
-              className="flex items-center gap-2 px-7 py-4 rounded-full text-sm font-semibold transition-all duration-300 hover:bg-white/10"
+              className="flex items-center justify-center gap-2 w-full sm:w-auto px-7 py-4 rounded-full text-sm font-semibold transition-all duration-300 hover:bg-white/10"
               style={{
                 color: "rgba(255,255,255,0.8)",
                 border: "1px solid rgba(255,255,255,0.12)",
@@ -269,8 +269,8 @@ export default function Home() {
       </section>
 
       {/* ── Stats Bar ──────────────────────────────────────────────────────── */}
-      <section className="py-12 px-6" style={{ borderTop: "1px solid rgba(255,255,255,0.05)", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
-        <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
+      <section className="py-10 px-5" style={{ borderTop: "1px solid rgba(255,255,255,0.05)", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+        <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
           {[
             { value: 5000, suffix: "+", label: "Creators in Network" },
             { value: 30, suffix: "+", label: "Campaigns Delivered" },
@@ -298,7 +298,7 @@ export default function Home() {
       </section>
 
       {/* ── What We Do ─────────────────────────────────────────────────────── */}
-      <section className="py-24 px-6">
+      <section className="py-16 md:py-24 px-5 md:px-6">
         <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
@@ -311,9 +311,8 @@ export default function Home() {
                 </span>
               </FadeUp>
               <FadeUp delay={0.1}>
-                <h2 className="text-4xl md:text-5xl font-black leading-tight mb-6 tracking-tight">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-black leading-tight mb-6 tracking-tight">
                   We&apos;re not just an agency.{" "}
-                  <br />
                   <span
                     style={{
                       background: "linear-gradient(135deg, #8b5cf6, #ec4899)",
@@ -391,13 +390,13 @@ export default function Home() {
       </section>
 
       {/* ── Featured Campaigns ─────────────────────────────────────────────── */}
-      <section className="py-24 px-6" style={{ background: "rgba(255,255,255,0.015)" }}>
+      <section className="py-16 md:py-24 px-5 md:px-6" style={{ background: "rgba(255,255,255,0.015)" }}>
         <div className="max-w-6xl mx-auto">
           <FadeUp className="text-center mb-16">
             <span className="text-xs font-semibold uppercase tracking-widest mb-4 block" style={{ color: "#ec4899" }}>
               Our Work
             </span>
-            <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-4">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight mb-4">
               Campaigns That{" "}
               <span
                 style={{
@@ -511,19 +510,18 @@ export default function Home() {
       </section>
 
       {/* ── CTA Section ──────────────────────────────────────────────────────── */}
-      <section className="py-32 px-6">
+      <section className="py-16 md:py-24 px-5 md:px-6">
         <div className="max-w-3xl mx-auto text-center">
           <FadeUp>
             <div
-              className="inline-block px-8 py-16 rounded-3xl w-full"
+              className="block px-5 sm:px-8 py-10 sm:py-14 md:py-16 rounded-2xl md:rounded-3xl w-full"
               style={{
                 background: "linear-gradient(135deg, rgba(139,92,246,0.15) 0%, rgba(236,72,153,0.1) 100%)",
                 border: "1px solid rgba(139,92,246,0.2)",
               }}
             >
-              <h2 className="text-4xl md:text-5xl font-black mb-4 tracking-tight">
-                Ready to Build
-                <br />
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-black mb-4 tracking-tight">
+                Ready to Build{" "}
                 <span
                   style={{
                     background: "linear-gradient(135deg, #8b5cf6, #ec4899)",
@@ -541,14 +539,14 @@ export default function Home() {
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Link
                   href="/contact"
-                  className="px-8 py-4 rounded-full text-sm font-semibold text-white transition-all duration-300 hover:shadow-[0_0_30px_rgba(139,92,246,0.5)] hover:scale-105"
+                  className="w-full sm:w-auto text-center px-8 py-4 rounded-full text-sm font-semibold text-white transition-all duration-300 hover:shadow-[0_0_30px_rgba(139,92,246,0.5)] hover:scale-105"
                   style={{ background: "linear-gradient(135deg, #8b5cf6, #ec4899)" }}
                 >
                   Start a Collaboration
                 </Link>
                 <Link
                   href="/services"
-                  className="px-8 py-4 rounded-full text-sm font-semibold transition-all duration-300 hover:bg-white/5"
+                  className="w-full sm:w-auto text-center px-8 py-4 rounded-full text-sm font-semibold transition-all duration-300 hover:bg-white/5"
                   style={{ color: "rgba(255,255,255,0.6)", border: "1px solid rgba(255,255,255,0.1)" }}
                 >
                   Explore Services

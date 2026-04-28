@@ -61,7 +61,7 @@ export default function AboutPage() {
   return (
     <>
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
-      <section className="relative pt-40 pb-24 px-6 overflow-hidden">
+      <section className="relative pt-28 md:pt-40 pb-16 md:pb-24 px-5 md:px-6 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
           <div
             className="absolute w-[500px] h-[500px] rounded-full"
@@ -92,7 +92,7 @@ export default function AboutPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="text-5xl md:text-7xl font-black tracking-tight leading-[0.95] mb-8"
+            className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tight leading-[1] md:leading-[0.95] mb-8"
           >
             Built for Brands
             <br />
@@ -122,12 +122,12 @@ export default function AboutPage() {
       </section>
 
       {/* ── Story ────────────────────────────────────────────────────────── */}
-      <section className="py-24 px-6">
+      <section className="py-16 md:py-24 px-5 md:px-6">
         <div className="max-w-6xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-16 items-start">
+          <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
             <div>
               <FadeUp>
-                <h2 className="text-3xl md:text-4xl font-black tracking-tight mb-6 leading-tight">
+                <h2 className="text-2xl md:text-3xl lg:text-4xl font-black tracking-tight mb-6 leading-tight">
                   We understand the creator economy{" "}
                   <span
                     style={{
@@ -203,13 +203,13 @@ export default function AboutPage() {
       </section>
 
       {/* ── Values ───────────────────────────────────────────────────────── */}
-      <section className="py-24 px-6" style={{ background: "rgba(255,255,255,0.015)" }}>
+      <section className="py-16 md:py-24 px-5 md:px-6" style={{ background: "rgba(255,255,255,0.015)" }}>
         <div className="max-w-6xl mx-auto">
-          <FadeUp className="text-center mb-16">
+          <FadeUp className="text-center mb-12 md:mb-16">
             <span className="text-xs font-semibold uppercase tracking-widest mb-4 block" style={{ color: "#8b5cf6" }}>
               Our Values
             </span>
-            <h2 className="text-4xl md:text-5xl font-black tracking-tight">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight">
               What Drives{" "}
               <span
                 style={{
@@ -278,9 +278,9 @@ export default function AboutPage() {
       </section>
 
       {/* ── CTA ──────────────────────────────────────────────────────────── */}
-      <section className="py-32 px-6 text-center">
+      <section className="py-16 md:py-24 px-5 md:px-6 text-center">
         <FadeUp>
-          <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight mb-4">
             Ready to{" "}
             <span
               style={{
@@ -299,14 +299,14 @@ export default function AboutPage() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/contact"
-              className="px-8 py-4 rounded-full text-sm font-semibold text-white transition-all duration-300 hover:shadow-[0_0_30px_rgba(139,92,246,0.4)] hover:scale-105"
+              className="w-full sm:w-auto text-center px-8 py-4 rounded-full text-sm font-semibold text-white transition-all duration-300 hover:shadow-[0_0_30px_rgba(139,92,246,0.4)] hover:scale-105"
               style={{ background: "linear-gradient(135deg, #8b5cf6, #ec4899)" }}
             >
               Start a Campaign
             </Link>
             <Link
               href="/services"
-              className="px-8 py-4 rounded-full text-sm font-semibold transition-all duration-300 hover:bg-white/5"
+              className="w-full sm:w-auto text-center px-8 py-4 rounded-full text-sm font-semibold transition-all duration-300 hover:bg-white/5"
               style={{ color: "rgba(255,255,255,0.6)", border: "1px solid rgba(255,255,255,0.1)" }}
             >
               View Services

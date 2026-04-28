@@ -97,7 +97,7 @@ export default function ServicesPage() {
   return (
     <>
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
-      <section className="relative pt-40 pb-16 px-6 overflow-hidden text-center">
+      <section className="relative pt-28 md:pt-40 pb-12 md:pb-16 px-5 md:px-6 overflow-hidden text-center">
         <div className="absolute inset-0 pointer-events-none">
           <div
             className="absolute w-[600px] h-[600px] rounded-full"
@@ -129,10 +129,9 @@ export default function ServicesPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="text-5xl md:text-7xl font-black tracking-tight leading-[0.95] mb-6"
+            className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tight leading-[1] md:leading-[0.95] mb-6"
           >
-            Everything You Need
-            <br />
+            Everything You Need{" "}
             <span
               style={{
                 background: "linear-gradient(135deg, #8b5cf6, #ec4899)",
@@ -159,23 +158,23 @@ export default function ServicesPage() {
       </section>
 
       {/* ── Stacked Cards (Services) ──────────────────────────────────────── */}
-      <section className="px-6 py-8">
+      <section className="px-4 md:px-6 py-6 md:py-8">
         <div className="max-w-4xl mx-auto">
           <StackedCards cards={services} />
         </div>
       </section>
 
       {/* ── Process ──────────────────────────────────────────────────────── */}
-      <section className="py-24 px-6" style={{ background: "rgba(255,255,255,0.015)" }}>
+      <section className="py-16 md:py-24 px-5 md:px-6" style={{ background: "rgba(255,255,255,0.015)" }}>
         <div className="max-w-6xl mx-auto">
-          <FadeUp className="text-center mb-16">
+          <FadeUp className="text-center mb-12 md:mb-16">
             <span
               className="text-xs font-semibold uppercase tracking-widest mb-4 block"
               style={{ color: "#f59e0b" }}
             >
               How We Work
             </span>
-            <h2 className="text-4xl md:text-5xl font-black tracking-tight">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight">
               Our{" "}
               <span
                 style={{
@@ -250,9 +249,9 @@ export default function ServicesPage() {
       </section>
 
       {/* ── CTA ──────────────────────────────────────────────────────────── */}
-      <section className="py-32 px-6 text-center">
+      <section className="py-16 md:py-24 px-5 md:px-6 text-center">
         <FadeUp>
-          <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight mb-4">
             Ready to{" "}
             <span
               style={{

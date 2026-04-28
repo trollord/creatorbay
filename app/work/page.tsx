@@ -85,7 +85,7 @@ export default function WorkPage() {
   return (
     <>
       {/* ── Hero ─────────────────────────────────────────────────────────── */}
-      <section className="relative pt-40 pb-16 px-6 overflow-hidden text-center">
+      <section className="relative pt-28 md:pt-40 pb-12 md:pb-16 px-5 md:px-6 overflow-hidden text-center">
         <div className="absolute inset-0 pointer-events-none">
           <div
             className="absolute w-[500px] h-[500px] rounded-full"
@@ -124,7 +124,7 @@ export default function WorkPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="text-5xl md:text-7xl font-black tracking-tight leading-[0.95] mb-6"
+            className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tight leading-[1] md:leading-[0.95] mb-6"
           >
             Campaigns That
             <br />
@@ -180,7 +180,7 @@ export default function WorkPage() {
       </section>
 
       {/* ── Campaign cards ────────────────────────────────────────────────── */}
-      <section className="px-6 pb-24">
+      <section className="px-5 md:px-6 pb-16 md:pb-24">
         <div className="max-w-6xl mx-auto">
           <AnimatePresence mode="popLayout">
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -296,11 +296,11 @@ export default function WorkPage() {
 
       {/* ── CTA ──────────────────────────────────────────────────────────── */}
       <section
-        className="py-32 px-6 text-center"
+        className="py-16 md:py-24 px-5 md:px-6 text-center"
         style={{ background: "rgba(255,255,255,0.015)" }}
       >
         <FadeUp>
-          <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-4">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight mb-4">
             Ready to see your brand{" "}
             <span
               style={{
