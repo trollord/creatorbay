@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -204,10 +205,20 @@ function NavLogo({ scrolled }: { scrolled: boolean }) {
   return (
     <Link href="/" className="flex items-center gap-2 group shrink-0">
       <div
-        className="w-8 h-8 rounded-lg flex items-center justify-center text-white font-black text-sm"
-        style={{ background: "linear-gradient(135deg, #8b5cf6, #ec4899)" }}
+        className="rounded-lg overflow-hidden flex-shrink-0 transition-all duration-300"
+        style={{
+          background: scrolled ? "rgba(255,255,255,0.08)" : "rgba(255,255,255,0.06)",
+          padding: "3px",
+        }}
       >
-        CB
+        <Image
+          src="/logo.jpg"
+          alt="CreatorBay"
+          width={34}
+          height={34}
+          className="rounded-md block"
+          style={{ objectFit: "cover" }}
+        />
       </div>
       <span className="font-bold text-lg tracking-tight text-white">
         Creator<span style={{ color: "#8b5cf6" }}>Bay</span>

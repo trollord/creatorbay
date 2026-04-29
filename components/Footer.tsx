@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Share2, MessageCircle, Mail } from "lucide-react";
 
 const footerLinks = [
@@ -28,11 +29,15 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <Link href="/" className="flex items-center gap-2 mb-4">
-              <div
-                className="w-9 h-9 rounded-xl flex items-center justify-center text-white font-black text-sm"
-                style={{ background: "linear-gradient(135deg, #8b5cf6, #ec4899)" }}
-              >
-                CB
+              <div className="rounded-xl overflow-hidden flex-shrink-0" style={{ padding: "3px", background: "rgba(255,255,255,0.06)" }}>
+                <Image
+                  src="/logo.jpg"
+                  alt="CreatorBay"
+                  width={40}
+                  height={40}
+                  className="rounded-lg block"
+                  style={{ objectFit: "cover" }}
+                />
               </div>
               <span className="font-bold text-xl text-white">
                 Creator<span style={{ color: "#8b5cf6" }}>Bay</span>
