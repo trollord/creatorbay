@@ -87,7 +87,7 @@ export default function Footer() {
                 hello@creatorbaymedia.net
               </a>
               <a
-                href="https://wa.me/1234567890"
+                href="https://wa.me/9967562434"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 text-sm transition-colors duration-200 hover:text-white group"
@@ -138,7 +138,7 @@ export default function Footer() {
               <Share2 size={14} color="rgba(255,255,255,0.5)" />
             </a>
             <a
-              href="https://wa.me/1234567890"
+              href="https://wa.me/9967562434"
               target="_blank"
               rel="noopener noreferrer"
               className="w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
