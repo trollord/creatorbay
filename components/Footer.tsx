@@ -127,6 +127,22 @@ export default function Footer() {
           <p className="text-xs" style={{ color: "rgba(255,255,255,0.2)" }}>
             © 2025 CreatorBay. All rights reserved.
           </p>
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
+            <Link
+              href="/privacy-policy"
+              className="text-xs transition-colors duration-200 hover:text-white"
+              style={{ color: "rgba(255,255,255,0.4)" }}
+            >
+              Privacy Policy
+            </Link>
+            <Link
+              href="/terms-and-conditions"
+              className="text-xs transition-colors duration-200 hover:text-white"
+              style={{ color: "rgba(255,255,255,0.4)" }}
+            >
+              Terms &amp; Conditions
+            </Link>
+          </div>
           <div className="flex gap-4">
             <a
               href="https://instagram.com/creatorbay.media"
