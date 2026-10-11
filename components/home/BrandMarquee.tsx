@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { ScrollTrigger } from "@/lib/gsap";
 import { brandRows, type Brand } from "@/lib/site";
+import SplitReveal from "@/components/motion/SplitReveal";
 
 /** Four-point sparkle between logos. */
 function Spark() {
@@ -82,6 +83,11 @@ export default function BrandMarquee() {
       aria-label="Brands we've worked with"
       style={{ ["--play" as string]: paused ? "paused" : "running" }}
     >
+      <div className="gutter mb-10 md:mb-14">
+        <SplitReveal as="h2" by="lines" className="font-display max-w-[16ch] text-[clamp(2.4rem,5.4vw,5.6rem)] text-paper">
+          Trusted by.
+        </SplitReveal>
+      </div>
       <p className="sr-only">Brands we&apos;ve worked with: {names.join(", ")}.</p>
       <div data-skew className="flex flex-col gap-[clamp(2.5rem,5vw,5rem)] motion-reduce:[--play:paused]">
         <Row brands={brandRows[0]} />
