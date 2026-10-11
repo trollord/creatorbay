@@ -9,7 +9,7 @@ import GoLive from "@/components/home/GoLive";
 export const metadata: Metadata = {
   title: "Services | Creator Bay",
   description:
-    "Event marketing, brand collaborations, reel creation, creative production, strategy and reporting.",
+    "Brand collaborations, event marketing, reel creation, creative production, strategy and reporting, and websites.",
 };
 
 export default function ServicesPage() {

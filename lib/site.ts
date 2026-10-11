@@ -32,7 +32,8 @@ export type ServiceScene =
   | "collab"
   | "reel"
   | "production"
-  | "strategy";
+  | "strategy"
+  | "website";
 
 export const services: {
   slug: ServiceScene;
@@ -92,6 +93,16 @@ export const services: {
     deliverables: ["Audience-fit analysis", "Campaign planning", "Live performance tracking", "Post-campaign reports"],
     caption: "Booked because the numbers said so.",
     likes: "12.6K",
+  },
+  {
+    slug: "website",
+    title: "Websites",
+    short: "The page creators send people to, built to turn visits into enquiries.",
+    description:
+      "Every creator post ends with a link. We design and build the site it points to: quick to load on a phone, clear about what you sell, and set up so you can see which creator sent each visitor.",
+    deliverables: ["Design & build", "Launch landing pages", "Fast on mobile", "Link tracking & analytics"],
+    caption: "Link in bio. Loads before they scroll away.",
+    likes: "9.8K",
   },
 ];
 

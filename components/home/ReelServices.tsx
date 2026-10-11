@@ -92,7 +92,7 @@ export default function ReelServices() {
     <section ref={root} className="on-dark relative bg-ink text-paper" aria-label="Services">
       <div className="gutter pt-24 md:pt-32">
         <SplitReveal as="h2" by="lines" className="font-display max-w-[14ch] text-[clamp(3.2rem,8.5vw,9rem)]">
-          Five ways to get talked about.
+          Six ways to get talked about.
         </SplitReveal>
       </div>
 
