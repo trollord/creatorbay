@@ -1,112 +1,23 @@
-"use client";
+import type { Metadata } from "next";
+import LegalLayout, { Section, LegalContact } from "@/components/LegalLayout";
 
-import { motion } from "framer-motion";
-import Link from "next/link";
-import { Shield, Mail, MessageCircle } from "lucide-react";
-
-function FadeUp({
-  children,
-  delay = 0,
-  className,
-}: {
-  children: React.ReactNode;
-  delay?: number;
-  className?: string;
-}) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  );
-}
+export const metadata: Metadata = {
+  title: "Privacy policy | Creator Bay",
+};
 
 export default function PrivacyPolicyPage() {
   return (
-    <>
-      {/* ── Hero ─────────────────────────────────────────────────────────── */}
-      <section className="relative pt-28 md:pt-40 pb-12 md:pb-16 px-5 md:px-6 overflow-hidden text-center">
-        <div className="absolute inset-0 pointer-events-none">
-          <div
-            className="absolute w-[500px] h-[500px] rounded-full"
-            style={{
-              background: "radial-gradient(circle, rgba(139,92,246,0.12) 0%, transparent 70%)",
-              top: "-10%",
-              left: "50%",
-              transform: "translateX(-50%)",
-            }}
-          />
-        </div>
-
-        <div className="max-w-3xl mx-auto relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8 text-xs font-semibold uppercase tracking-widest"
-            style={{
-              background: "rgba(139,92,246,0.1)",
-              border: "1px solid rgba(139,92,246,0.2)",
-              color: "#a78bfa",
-            }}
-          >
-            <Shield size={14} />
-            Privacy Policy
-          </motion.div>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-            className="text-4xl md:text-6xl font-bold tracking-tight mb-6"
-          >
-            Your Privacy <span style={{ color: "#8b5cf6" }}>Matters</span>
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="text-base md:text-lg leading-relaxed"
-            style={{ color: "rgba(255,255,255,0.55)" }}
-          >
-            How CreatorBay collects, uses, and protects your information.
-          </motion.p>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.7, delay: 0.3 }}
-            className="text-xs mt-6"
-            style={{ color: "rgba(255,255,255,0.35)" }}
-          >
-            Last updated: May 15, 2026
-          </motion.p>
-        </div>
-      </section>
-
-      {/* ── Content ──────────────────────────────────────────────────────── */}
-      <section className="relative pb-20 md:pb-28 px-5 md:px-6">
-        <div className="max-w-3xl mx-auto">
-          <FadeUp>
-            <div
-              className="rounded-2xl p-7 md:p-10 space-y-10"
-              style={{
-                background: "rgba(255,255,255,0.02)",
-                border: "1px solid rgba(255,255,255,0.06)",
-              }}
-            >
-              <Section title="1. Introduction">
+    <LegalLayout
+      title="Privacy policy"
+      intro="How Creator Bay collects, uses, and protects your information."
+      related={{ href: "/terms-and-conditions", label: "Terms & Conditions" }}
+    >
+      <Section title="1. Introduction">
                 <p>
-                  CreatorBay (&quot;we&quot;, &quot;our&quot;, &quot;us&quot;) is an influencer marketing
-                  agency that connects brands, events, and restaurants with creators. This Privacy Policy
+                  Creator Bay (&quot;we&quot;, &quot;our&quot;, &quot;us&quot;) is an influencer marketing
+                  agency that connects brands and events with creators. This Privacy Policy
                   explains how we collect, use, store, and share information when you visit our website,
-                  contact us, or engage with our services — including communications over WhatsApp,
+                  contact us, or engage with our services, including communications over WhatsApp,
                   email, or phone.
                 </p>
                 <p>
@@ -119,7 +30,7 @@ export default function PrivacyPolicyPage() {
                 <ul>
                   <li>
                     <strong>Contact details</strong> you submit through our forms or share with us
-                    directly — including your name, brand name, email address, and phone number.
+                    directly, including your name, brand name, email address, and phone number.
                   </li>
                   <li>
                     <strong>Project details</strong> you share with us about your campaign, service
@@ -141,7 +52,7 @@ export default function PrivacyPolicyPage() {
                 <ul>
                   <li>Respond to your inquiries and provide the services you request.</li>
                   <li>
-                    Send campaign updates, proposals, invoices, and other transactional messages —
+                    Send campaign updates, proposals, invoices, and other transactional messages,
                     including over WhatsApp, where you have opted in.
                   </li>
                   <li>
@@ -158,7 +69,7 @@ export default function PrivacyPolicyPage() {
                   We use the WhatsApp Business Platform to communicate with clients and prospects who
                   have shared their phone number with us or initiated contact through WhatsApp. By
                   reaching out to us on WhatsApp or providing your number for WhatsApp follow-up, you
-                  consent to receive messages from CreatorBay related to your inquiry, your active
+                  consent to receive messages from Creator Bay related to your inquiry, your active
                   campaign, or service updates.
                 </p>
                 <p>
@@ -179,7 +90,7 @@ export default function PrivacyPolicyPage() {
                     (limited to what is necessary for the collaboration).
                   </li>
                   <li>
-                    <strong>Service providers</strong> we rely on — such as email, hosting, analytics,
+                    <strong>Service providers</strong> we rely on, such as email, hosting, analytics,
                     payment, and messaging platforms (including Meta / WhatsApp).
                   </li>
                   <li>
@@ -249,71 +160,8 @@ export default function PrivacyPolicyPage() {
                   If you have any questions about this Privacy Policy or how we handle your information,
                   reach out to us:
                 </p>
-                <div className="flex flex-col gap-3 mt-2">
-                  <a
-                    href="mailto:hello@creatorbaymedia.net"
-                    className="flex items-center gap-3 text-sm transition-colors duration-200 hover:text-white group"
-                    style={{ color: "rgba(255,255,255,0.65)" }}
-                  >
-                    <div
-                      className="w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-200 group-hover:scale-110"
-                      style={{ background: "rgba(139,92,246,0.15)", border: "1px solid rgba(139,92,246,0.2)" }}
-                    >
-                      <Mail size={14} color="#8b5cf6" />
-                    </div>
-                    hello@creatorbaymedia.net
-                  </a>
-                  <a
-                    href="https://wa.me/9967562434"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-3 text-sm transition-colors duration-200 hover:text-white group"
-                    style={{ color: "rgba(255,255,255,0.65)" }}
-                  >
-                    <div
-                      className="w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-200 group-hover:scale-110"
-                      style={{ background: "rgba(37,211,102,0.1)", border: "1px solid rgba(37,211,102,0.2)" }}
-                    >
-                      <MessageCircle size={14} color="#25d366" />
-                    </div>
-                    Chat on WhatsApp
-                  </a>
-                </div>
+                <LegalContact />
               </Section>
-            </div>
-          </FadeUp>
-
-          <FadeUp delay={0.1}>
-            <div className="mt-10 text-center">
-              <p className="text-sm mb-4" style={{ color: "rgba(255,255,255,0.45)" }}>
-                Also see our{" "}
-                <Link
-                  href="/terms-and-conditions"
-                  className="underline transition-colors duration-200 hover:text-white"
-                  style={{ color: "#a78bfa" }}
-                >
-                  Terms &amp; Conditions
-                </Link>
-                .
-              </p>
-            </div>
-          </FadeUp>
-        </div>
-      </section>
-    </>
-  );
-}
-
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <div>
-      <h2 className="text-xl md:text-2xl font-semibold mb-4 text-white">{title}</h2>
-      <div
-        className="text-sm md:text-[15px] leading-relaxed space-y-3 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-2 [&_strong]:text-white"
-        style={{ color: "rgba(255,255,255,0.65)" }}
-      >
-        {children}
-      </div>
-    </div>
+    </LegalLayout>
   );
 }
