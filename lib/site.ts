@@ -155,6 +155,36 @@ export const niches = [
   "Gaming",
 ];
 
+/** Brands we've worked with. `ratio` is width/height of the artwork; `scale`
+ *  evens out optical size (a thin script needs more height than a bold wordmark). */
+export type Brand = { name: string; src: string; ratio: number; scale: number };
+
+const brand = (name: string, file: string, ratio: number, scale: number): Brand => ({ name, src: `/brands/${file}`, ratio, scale });
+
+// Two rows of equal length, mixed by sector so similar wordmarks never sit side by side.
+export const brandRows: [Brand[], Brand[]] = [
+  [
+    brand("Toyota", "toyota.svg", 1, 1.45),
+    brand("Blinkit", "blinkit.svg", 3.8, 0.95),
+    brand("Dr.Althea", "dr-althea.png", 3.45, 1.35),
+    brand("Sunburn", "sunburn.svg", 4.31, 1.1),
+    brand("Tata Coffee", "tata-coffee.svg", 9.6, 0.7),
+    brand("Medicube", "medicube.svg", 5.12, 0.95),
+    brand("Maddock Films", "maddock-films.png", 2.4, 1.5),
+    brand("Bepanthen", "bepanthen.png", 4.19, 1),
+  ],
+  [
+    brand("BookMyShow", "bookmyshow.svg", 2.94, 1.1),
+    brand("Truecaller", "truecaller.svg", 5.22, 0.95),
+    brand("Beauty Matters", "beauty-matters.svg", 6.54, 1.1),
+    brand("Parle", "parle.svg", 2.68, 1.35),
+    brand("SKIN1004", "skin1004.svg", 12.25, 0.5),
+    brand("Bharat Forge", "bharat-forge.svg", 5.02, 1.15),
+    brand("d'Alba", "dalba.svg", 8, 0.8),
+    brand("TIRTIR", "tirtir.svg", 5.44, 0.9),
+  ],
+];
+
 export const values = [
   {
     title: "Precision over volume",

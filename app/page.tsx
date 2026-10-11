@@ -4,7 +4,7 @@ import Profile from "@/components/home/Profile";
 import ReelServices from "@/components/home/ReelServices";
 import StoryProcess from "@/components/home/StoryProcess";
 import Receipts from "@/components/home/Receipts";
-import NicheMarquee from "@/components/home/NicheMarquee";
+import BrandMarquee from "@/components/home/BrandMarquee";
 import GoLive from "@/components/home/GoLive";
 
 export default function Home() {
@@ -15,7 +15,7 @@ export default function Home() {
       <ReelServices />
       <StoryProcess />
       <Receipts />
-      <NicheMarquee />
+      <BrandMarquee />
       <GoLive />
       <Captions />
     </>
