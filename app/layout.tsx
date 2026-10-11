@@ -13,9 +13,9 @@ const archivo = Archivo({
 });
 
 export const metadata: Metadata = {
-  title: "CreatorBay | Influencer Marketing Agency in Mumbai",
+  title: "Creator Bay | Influencer Marketing Agency in Mumbai",
   description:
-    "CreatorBay matches brands, events and restaurants with creators their customers already follow, then runs the campaign from brief to report.",
+    "Creator Bay matches brands and events with creators their customers already follow, then runs the campaign from brief to report.",
 };
 
 export const viewport: Viewport = {
@@ -28,7 +28,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <head>
         <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
       </head>
-      <body className="min-h-full bg-ink">
+      <body className="min-h-full bg-ink" suppressHydrationWarning>
         <SmoothScroll />
         <Navbar />
         <main>{children}</main>

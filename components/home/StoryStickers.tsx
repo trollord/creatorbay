@@ -24,7 +24,7 @@ function Poll() {
         <div className="relative overflow-hidden rounded-xl bg-fog px-4 py-3">
           <span className="absolute inset-y-0 left-0 w-[78%] origin-left bg-red [animation:grow_.9s_var(--ease-out)_.2s_both]" />
           <span className="relative flex justify-between">
-            <span>@mumbai.foodie</span>
+            <span>@mumbai.style</span>
             <span>78%</span>
           </span>
         </div>
@@ -99,9 +99,9 @@ function Slider() {
           🔥
         </span>
       </div>
-      <p className="mt-6 text-center text-[13px] text-ink/55">3× bookings · 400K reach · 18% engagement</p>
+      <p className="mt-6 text-center text-[13px] text-ink/55">400K reach · 250K views · 18% engagement</p>
     </div>
   );
 }
 
-export const stickers = [Question, Poll, Countdown, Live, Slider];
+export const stickers = [Question, Countdown, Poll, Live, Slider];

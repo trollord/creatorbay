@@ -47,7 +47,7 @@ export default function GoLive({
             <span className="rec-dot h-3 w-3 rounded-full bg-ink" />
             REC {tc}
           </span>
-          <span className="hidden sm:inline">CreatorBay, Mumbai</span>
+          <span className="hidden sm:inline">Creator Bay, Mumbai</span>
         </div>
 
         <div>
@@ -70,7 +70,7 @@ export default function GoLive({
                 </Link>
               </Magnetic>
               <a
-                href={whatsappLink("Hi CreatorBay! I'd like to talk about a campaign.")}
+                href={whatsappLink("Hi Creator Bay! I'd like to talk about a campaign.")}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex h-14 items-center rounded-full border-2 border-ink px-7 text-[16px] font-semibold transition-colors duration-200 hover:bg-ink hover:text-paper md:h-16"

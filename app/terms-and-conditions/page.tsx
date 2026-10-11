@@ -2,21 +2,20 @@ import type { Metadata } from "next";
 import LegalLayout, { Section, LegalContact } from "@/components/LegalLayout";
 
 export const metadata: Metadata = {
-  title: "Terms of service | CreatorBay",
+  title: "Terms of service | Creator Bay",
 };
 
 export default function TermsPage() {
   return (
     <LegalLayout
       title="Terms of service"
-      intro="The rules that govern your use of CreatorBay's website and services."
-      updated="May 15, 2026"
+      intro="The rules that govern your use of Creator Bay's website and services."
       related={{ href: "/privacy-policy", label: "Privacy Policy" }}
     >
       <Section title="1. Acceptance of Terms">
                 <p>
                   These Terms &amp; Conditions (&quot;Terms&quot;) govern your access to and use of
-                  the CreatorBay website and the services we provide. By using our website, contacting
+                  the Creator Bay website and the services we provide. By using our website, contacting
                   us, or engaging us for any service, you agree to be bound by these Terms.
                 </p>
                 <p>
@@ -25,10 +24,10 @@ export default function TermsPage() {
                 </p>
               </Section>
 
-              <Section title="2. About CreatorBay">
+              <Section title="2. About Creator Bay">
                 <p>
-                  CreatorBay is an influencer marketing agency that connects brands, events, and
-                  restaurants with creators and provides related services including campaign strategy,
+                  Creator Bay is an influencer marketing agency that connects brands and events
+                  with creators and provides related services including campaign strategy,
                   creative production, reel creation, and consultation.
                 </p>
               </Section>
@@ -41,7 +40,7 @@ export default function TermsPage() {
                   engagement document will prevail.
                 </p>
                 <ul>
-                  <li>Influencer marketing campaigns for events, brands, and restaurants.</li>
+                  <li>Influencer marketing campaigns for events and brands.</li>
                   <li>Brand collaborations and creator outreach.</li>
                   <li>Creative production and reel creation.</li>
                   <li>Strategy and consultation.</li>
@@ -49,7 +48,7 @@ export default function TermsPage() {
               </Section>
 
               <Section title="4. Client Responsibilities">
-                <p>By engaging CreatorBay, the client agrees to:</p>
+                <p>By engaging Creator Bay, the client agrees to:</p>
                 <ul>
                   <li>
                     Provide accurate, complete, and timely information, brand assets, and approvals
@@ -86,8 +85,8 @@ export default function TermsPage() {
 
               <Section title="7. Intellectual Property">
                 <p>
-                  All trademarks, logos, copy, designs, and other content on the CreatorBay website are
-                  owned by CreatorBay or its licensors and are protected by applicable laws. You may
+                  All trademarks, logos, copy, designs, and other content on the Creator Bay website are
+                  owned by Creator Bay or its licensors and are protected by applicable laws. You may
                   not copy, reproduce, or use them without our prior written consent.
                 </p>
                 <p>
@@ -99,7 +98,7 @@ export default function TermsPage() {
               <Section title="8. Communications & WhatsApp">
                 <p>
                   By providing your phone number or initiating contact through WhatsApp, you consent to
-                  receive service-related messages from CreatorBay over WhatsApp, email, or phone in
+                  receive service-related messages from Creator Bay over WhatsApp, email, or phone in
                   relation to your inquiry or active engagement. You may opt out at any time by
                   replying &quot;STOP&quot; to a WhatsApp message or emailing us.
                 </p>
@@ -127,9 +126,9 @@ export default function TermsPage() {
 
               <Section title="11. Limitation of Liability">
                 <p>
-                  To the maximum extent permitted by law, CreatorBay&apos;s aggregate liability arising
+                  To the maximum extent permitted by law, Creator Bay&apos;s aggregate liability arising
                   out of or in connection with the services will not exceed the fees paid by the client
-                  to CreatorBay for the specific engagement giving rise to the claim. CreatorBay will
+                  to Creator Bay for the specific engagement giving rise to the claim. Creator Bay will
                   not be liable for indirect, incidental, special, or consequential damages, including
                   loss of profits, revenue, data, or goodwill.
                 </p>

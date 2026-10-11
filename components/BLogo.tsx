@@ -1,6 +1,6 @@
 import { useId } from "react";
 
-// Flat SVG of the CreatorBay "B", using the same coordinates as the 3D mark, with the
+// Flat SVG of the Creator Bay "B", using the same coordinates as the 3D mark, with the
 // logo's isometric extrusion faked by stacking the body up and to the right.
 const BODY =
   "M-30 73L30 73Q50 73 50 53L50 12L29 0L44 -15L44 -53Q44 -73 24 -73L-30 -73Q-50 -73 -50 -53L-50 53Q-50 73 -30 73Z";
@@ -11,7 +11,7 @@ export default function BLogo({
   className,
   body = "#1d1d1d",
   face = "#ffffff",
-  title = "CreatorBay",
+  title = "Creator Bay",
 }: {
   className?: string;
   body?: string;

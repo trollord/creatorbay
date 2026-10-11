@@ -7,9 +7,9 @@ import StoryProcess from "@/components/home/StoryProcess";
 import GoLive from "@/components/home/GoLive";
 
 export const metadata: Metadata = {
-  title: "Services | CreatorBay",
+  title: "Services | Creator Bay",
   description:
-    "Event marketing, brand collaborations, restaurant and hospitality campaigns, reel creation, creative production, strategy and reporting.",
+    "Event marketing, brand collaborations, reel creation, creative production, strategy and reporting.",
 };
 
 export default function ServicesPage() {
@@ -40,7 +40,7 @@ export default function ServicesPage() {
         ))}
       </section>
       <StoryProcess />
-      <GoLive title="Pick a format. We'll do the rest." body="Not sure which service you need? Tell us the goal, whether that's footfall, sales or buzz, and we'll plan the campaign around it." />
+      <GoLive title="Pick a format. We'll do the rest." body="Launching a product? Building a brand? Defending a narrative? Creators are your fastest way into the feed." />
     </>
   );
 }

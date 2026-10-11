@@ -14,23 +14,22 @@ export const whatsappLink = (text?: string) =>
 export const instagramLink = `https://instagram.com/${contact.instagram}`;
 
 export const navLinks = [
+  { name: "About", href: "/about" },
   { name: "Work", href: "/work" },
   { name: "Services", href: "/services" },
-  { name: "About", href: "/about" },
   { name: "Contact", href: "/contact" },
 ];
 
 export const stats = [
-  { value: 5000, suffix: "+", label: "creators in network" },
+  { value: 15, suffix: "K+", label: "creators in network" },
   { value: 30, suffix: "+", label: "campaigns delivered" },
-  { value: 400, suffix: "K+", label: "organic impressions" },
+  { value: 50, suffix: "M+", label: "organic impressions" },
   { value: 18, suffix: "%", label: "average engagement" },
 ];
 
 export type ServiceScene =
   | "event"
   | "collab"
-  | "restaurant"
   | "reel"
   | "production"
   | "strategy";
@@ -45,16 +44,6 @@ export const services: {
   likes: string;
 }[] = [
   {
-    slug: "event",
-    title: "Event marketing",
-    short: "Get your event into everyone's feed before, during and after the night.",
-    description:
-      "We find and manage creators who promote your event in the run-up, cover it live on the night and keep it in people's feeds afterwards. That means more tickets sold and more people through the door.",
-    deliverables: ["Pre-launch creator hype", "On-ground creator coverage", "Live stories & recaps", "Ticketing pushes"],
-    caption: "Sold out. Again. 🎟️",
-    likes: "48.2K",
-  },
-  {
     slug: "collab",
     title: "Brand collaborations",
     short: "Creator partnerships that last longer than one post.",
@@ -65,14 +54,14 @@ export const services: {
     likes: "31.7K",
   },
   {
-    slug: "restaurant",
-    title: "Restaurants & hospitality",
-    short: "Fuller tables, starting with the right food creators.",
+    slug: "event",
+    title: "Event marketing",
+    short: "Get your event into everyone's feed before, during and after the night.",
     description:
-      "We bring food and lifestyle creators to your restaurant, café or lounge. Their posts bring in walk-ins and reservations, and give your venue regulars who follow what you do next.",
-    deliverables: ["Food creator visits", "Launch & menu drops", "Reservation campaigns", "UGC for your page"],
-    caption: "Fully booked every weekend 🍝",
-    likes: "22.9K",
+      "We find and manage creators who promote your event in the run-up, cover it live on the night and keep it in people's feeds afterwards. That means more tickets sold and more people through the door.",
+    deliverables: ["Pre-launch creator hype", "On-ground creator coverage", "Live stories & recaps", "Ticketing pushes"],
+    caption: "Sold out. Again. 🎟️",
+    likes: "48.2K",
   },
   {
     slug: "reel",
@@ -112,12 +101,12 @@ export const process = [
     desc: "We learn about your brand, your goals and your customers, and agree on what a good result looks like.",
   },
   {
-    title: "Creator matching",
-    desc: "We shortlist creators from our network of 5,000+ based on who their followers are and how they engage.",
-  },
-  {
     title: "Campaign build",
     desc: "We write the creative brief, plan the content and set the timeline, and handle contracts and logistics.",
+  },
+  {
+    title: "Creator matching",
+    desc: "We shortlist creators from our network of 15,000+ based on who their followers are and how they engage.",
   },
   {
     title: "Go live",
@@ -133,26 +122,13 @@ export const caseStudies = [
   {
     category: "Event marketing",
     title: "The grand launch experience",
-    summary: "12 creators promoted the launch. Every ticket sold, and their posts earned over 400K organic impressions.",
     metric: { value: 400, suffix: "K+", label: "organic impressions" },
     secondary: [
       { value: "12", label: "creator partners" },
       { value: "100%", label: "tickets sold" },
     ],
-    quote: "CreatorBay understood the vibe of our event perfectly. The content felt native, not sponsored.",
+    quote: "Creator Bay understood the vibe of our event perfectly. The content felt native, not sponsored.",
     tone: "red" as const,
-  },
-  {
-    category: "Restaurant collaboration",
-    title: "Weekend footfall campaign",
-    summary: "8 food creators visited over two weeks. Weekend reservations tripled within 14 days.",
-    metric: { value: 3, suffix: "×", label: "weekend reservations" },
-    secondary: [
-      { value: "8", label: "food creators" },
-      { value: "14", label: "days to results" },
-    ],
-    quote: "We were fully booked every weekend after the campaign wrapped. Genuinely impressive.",
-    tone: "ink" as const,
   },
   {
     category: "Brand + reel creation",
@@ -169,10 +145,8 @@ export const caseStudies = [
 ];
 
 export const niches = [
-  "Food",
   "Events",
   "Fashion",
-  "Nightlife",
   "Tech",
   "Fitness",
   "Travel",
@@ -188,7 +162,7 @@ export const values = [
   },
   {
     title: "Creativity with purpose",
-    desc: "Every post has a job, whether that's bookings, sign-ups or awareness. If it doesn't do that job, we change it.",
+    desc: "Every post has a job, whether that's sign-ups, ticket sales or awareness. If it doesn't do that job, we change it.",
   },
   {
     title: "Transparency & trust",
@@ -196,6 +170,6 @@ export const values = [
   },
   {
     title: "Results that matter",
-    desc: "We measure footfall, engagement, brand recall and sales, because those are what move your business.",
+    desc: "We measure reach, engagement, brand recall and sales, because those are what move your business.",
   },
 ];

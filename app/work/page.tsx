@@ -7,8 +7,8 @@ import GoLive from "@/components/home/GoLive";
 import Odometer from "@/components/motion/Odometer";
 
 export const metadata: Metadata = {
-  title: "Work | CreatorBay",
-  description: "Recent CreatorBay campaigns: a sold-out launch event, a restaurant with tripled weekend bookings and a reel series with 250K views.",
+  title: "Work | Creator Bay",
+  description: "Recent Creator Bay campaigns: a sold-out launch event and a reel series with 250K views.",
 };
 
 export default function WorkPage() {
@@ -18,9 +18,8 @@ export default function WorkPage() {
         kicker="Our work"
         title="The receipts."
         seed={7.1}
-        intro="Campaigns we've run for events, restaurants and brands, and what happened when their customers heard about them from creators they already follow."
       />
-      <section className="on-dark bg-ink py-20 text-paper md:py-28" aria-label="CreatorBay in numbers">
+      <section className="on-dark bg-ink py-20 text-paper md:py-28" aria-label="Creator Bay in numbers">
         <dl className="gutter grid grid-cols-2 gap-y-12 md:grid-cols-4">
           {stats.map((s, i) => (
             <div key={s.label} className="border-l border-paper/15 pl-5">

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRef } from "react";
-import { gsap, useGSAP } from "@/lib/gsap";
+import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
 import { caseStudies } from "@/lib/site";
 import SplitReveal from "@/components/motion/SplitReveal";
 import Odometer from "@/components/motion/Odometer";
@@ -25,14 +25,21 @@ export default function Receipts({ showHeading = true }: { showHeading?: boolean
         cards.forEach((card, i) => {
           const next = cards[i + 1];
           if (!next) return;
-          gsap.to(card.firstElementChild, {
-            scale: 0.92,
-            rotate: i % 2 ? 1.2 : -1.2,
-            filter: "brightness(0.88)",
-            ease: "none",
+          // Scale/rotate the card and fade a dim layer over it, all on one scrub.
+          // (Tweening `filter` from "none" is parsed by GSAP as brightness(0),
+          // which turned the whole card black.)
+          const tl = gsap.timeline({
+            defaults: { ease: "none" },
             scrollTrigger: { trigger: next, start: "top bottom", end: "top 14%", scrub: true },
           });
+          tl.to(card.firstElementChild, { scale: 0.92, rotate: i % 2 ? 1.2 : -1.2 }, 0).to(
+            card.querySelector("[data-dim]"),
+            { opacity: 0.16 },
+            0
+          );
         });
+        // Fonts change the card heights; re-measure so triggers stay aligned.
+        document.fonts?.ready.then(() => ScrollTrigger.refresh());
       });
       return () => mm.revert();
     },
@@ -56,14 +63,16 @@ export default function Receipts({ showHeading = true }: { showHeading?: boolean
         {caseStudies.map((c, i) => (
           <div key={c.title} data-receipt className="sticky" style={{ top: `calc(11svh + ${i * 18}px)` }}>
             <article
-              className={`grid min-h-[72svh] origin-top gap-10 rounded-[clamp(22px,3vw,40px)] p-[clamp(22px,4vw,64px)] will-change-transform md:grid-cols-12 ${tones[c.tone]}`}
+              className={`relative grid min-h-[72svh] origin-top gap-10 rounded-[clamp(22px,3vw,40px)] p-[clamp(22px,4vw,64px)] grid-cols-[minmax(0,1fr)] md:grid-cols-12 ${tones[c.tone]}`}
             >
               <div className="flex flex-col md:col-span-7">
                 <p className="text-[15px] font-medium opacity-70">
                   {String(i + 1).padStart(2, "0")} / {c.category}
                 </p>
                 <h3 className="font-display mt-4 text-[clamp(3rem,7vw,7.5rem)]">{c.title}</h3>
-                <p className="mt-5 max-w-[42ch] text-[17px] leading-relaxed opacity-80 md:text-[19px]">{c.summary}</p>
+                {"summary" in c && (
+                  <p className="mt-5 max-w-[42ch] text-[17px] leading-relaxed opacity-80 md:text-[19px]">{c.summary}</p>
+                )}
                 <blockquote className="mt-auto pt-10">
                   <p className="max-w-[46ch] text-[19px] font-medium leading-snug md:text-[22px]">“{c.quote}”</p>
                 </blockquote>
@@ -84,6 +93,11 @@ export default function Receipts({ showHeading = true }: { showHeading?: boolean
                   ))}
                 </dl>
               </div>
+              <span
+                data-dim
+                aria-hidden
+                className="pointer-events-none absolute inset-0 rounded-[inherit] bg-black opacity-0"
+              />
             </article>
           </div>
         ))}

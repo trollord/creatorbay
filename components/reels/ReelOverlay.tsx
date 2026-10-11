@@ -54,7 +54,7 @@ export default function ReelOverlay({ caption, likes, light = false }: { caption
         </div>
         <p className="mt-[1.4cqh] max-w-[78%] text-[3.8cqw] leading-snug">{caption}</p>
         <p className="mt-[1cqh] flex items-center gap-[1.6cqw] overflow-hidden whitespace-nowrap text-[3.3cqw] opacity-85">
-          <span>♫</span> CreatorBay · Original audio
+          <span>♫</span> Creator Bay · Original audio
         </p>
       </div>
     </div>

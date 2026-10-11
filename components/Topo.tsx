@@ -5,7 +5,7 @@ import { prefersReducedMotion, isCoarsePointer } from "@/lib/gsap";
 
 /*
  * Animated topographic contour lines, lifted from the background of the
- * CreatorBay logo. A noise field is drawn as iso-lines; the cursor raises a
+ * Creator Bay logo. A noise field is drawn as iso-lines; the cursor raises a
  * "hill" that the contours bend around. One full-screen WebGL2 quad.
  */
 
@@ -109,55 +109,123 @@ export default function Topo({
   seed?: number;
   className?: string;
 }) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const hostRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const gl = canvas.getContext("webgl2", { premultipliedAlpha: true, antialias: false, alpha: true });
-    if (!gl) return;
-
-    const compile = (type: number, src: string) => {
-      const s = gl.createShader(type)!;
-      gl.shaderSource(s, src);
-      gl.compileShader(s);
-      return s;
-    };
-    const prog = gl.createProgram()!;
-    gl.attachShader(prog, compile(gl.VERTEX_SHADER, VERT));
-    gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, FRAG));
-    gl.linkProgram(prog);
-    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
-    gl.useProgram(prog);
-
-    const buf = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
-    const loc = gl.getAttribLocation(prog, "p");
-    gl.enableVertexAttribArray(loc);
-    gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
-
-    const u = (n: string) => gl.getUniformLocation(prog, n);
-    const uRes = u("uRes"), uTime = u("uTime"), uMouse = u("uMouse"), uHill = u("uHill");
-    gl.uniform3fv(u("uColor"), hexToRgb(color));
-    gl.uniform1f(u("uAlpha"), alpha);
-    gl.uniform1f(u("uScale"), scale);
-    gl.uniform1f(u("uSeed"), seed);
+    const host = hostRef.current;
+    if (!host) return;
+    // A fresh <canvas> per effect run: once a context has been lost it can never
+    // be reused, so re-mounts (route changes, Strict Mode) must not inherit one.
+    const canvas = document.createElement("canvas");
+    canvas.setAttribute("aria-hidden", "true");
+    canvas.className = "block h-full w-full";
+    host.appendChild(canvas);
 
     const reduced = prefersReducedMotion();
-    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    // Contours are soft lines, so a low-res buffer scaled up by CSS looks the
+    // same and keeps GPU memory small (a full-bleed retina canvas was enough to
+    // lose the context on slower machines).
+    const dpr = Math.min(window.devicePixelRatio || 1, 1) * 0.75;
     const mouse = { x: -9999, y: -9999, tx: -9999, ty: -9999, hill: 0, thill: 0 };
+    let disposed = false;
+    let raf = 0;
+    let visible = true;
+    let lastDraw = 0;
+    const start = performance.now() - seed * 10000;
+
+    // GL state is rebuilt from scratch whenever the context is (re)created.
+    let gl: WebGL2RenderingContext | null = null;
+    let uRes: WebGLUniformLocation | null = null;
+    let uTime: WebGLUniformLocation | null = null;
+    let uMouse: WebGLUniformLocation | null = null;
+    let uHill: WebGLUniformLocation | null = null;
+
+    const build = () => {
+      gl = canvas.getContext("webgl2", { premultipliedAlpha: true, antialias: false, alpha: true });
+      if (!gl || gl.isContextLost()) return false;
+      const g = gl;
+      const compile = (type: number, src: string) => {
+        const sh = g.createShader(type)!;
+        g.shaderSource(sh, src);
+        g.compileShader(sh);
+        return sh;
+      };
+      const prog = g.createProgram()!;
+      g.attachShader(prog, compile(g.VERTEX_SHADER, VERT));
+      g.attachShader(prog, compile(g.FRAGMENT_SHADER, FRAG));
+      g.linkProgram(prog);
+      if (!g.getProgramParameter(prog, g.LINK_STATUS)) return false;
+      g.useProgram(prog);
+
+      const buf = g.createBuffer();
+      g.bindBuffer(g.ARRAY_BUFFER, buf);
+      g.bufferData(g.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), g.STATIC_DRAW);
+      const loc = g.getAttribLocation(prog, "p");
+      g.enableVertexAttribArray(loc);
+      g.vertexAttribPointer(loc, 2, g.FLOAT, false, 0, 0);
+
+      const u = (n: string) => g.getUniformLocation(prog, n);
+      uRes = u("uRes");
+      uTime = u("uTime");
+      uMouse = u("uMouse");
+      uHill = u("uHill");
+      g.uniform3fv(u("uColor"), hexToRgb(color));
+      g.uniform1f(u("uAlpha"), alpha);
+      g.uniform1f(u("uScale"), scale);
+      g.uniform1f(u("uSeed"), seed);
+      resize();
+      return true;
+    };
 
     const resize = () => {
       const r = canvas.getBoundingClientRect();
-      canvas.width = Math.max(1, Math.round(r.width * dpr));
-      canvas.height = Math.max(1, Math.round(r.height * dpr));
-      gl.viewport(0, 0, canvas.width, canvas.height);
-      gl.uniform2f(uRes, canvas.width, canvas.height);
+      const w = Math.max(1, Math.round(r.width * dpr));
+      const h = Math.max(1, Math.round(r.height * dpr));
+      if (canvas.width !== w || canvas.height !== h) {
+        canvas.width = w;
+        canvas.height = h;
+      }
+      if (gl && !gl.isContextLost()) {
+        gl.viewport(0, 0, w, h);
+        gl.uniform2f(uRes, w, h);
+      }
     };
-    resize();
-    const ro = new ResizeObserver(resize);
-    ro.observe(canvas);
+
+    const draw = (now: number) => {
+      if (!gl || gl.isContextLost()) return;
+      mouse.x += (mouse.tx - mouse.x) * 0.06;
+      mouse.y += (mouse.ty - mouse.y) * 0.06;
+      mouse.hill += (mouse.thill - mouse.hill) * 0.04;
+      gl.uniform1f(uTime, (now - start) / 1000);
+      gl.uniform2f(uMouse, mouse.x, mouse.y);
+      gl.uniform1f(uHill, mouse.hill);
+      gl.clearColor(0, 0, 0, 0);
+      gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+    };
+
+    const loop = (now: number) => {
+      if (disposed || !visible) return;
+      raf = requestAnimationFrame(loop);
+      if (now - lastDraw < 32) return; // ~30fps is plenty for slow contours
+      lastDraw = now;
+      draw(now);
+    };
+    const play = () => {
+      cancelAnimationFrame(raf);
+      if (reduced) draw(start + 4000);
+      else raf = requestAnimationFrame(loop);
+    };
+
+    const onLost = (e: Event) => {
+      e.preventDefault(); // lets the browser hand the context back
+      cancelAnimationFrame(raf);
+    };
+    const onRestored = () => {
+      if (!disposed && build()) play();
+    };
+    canvas.addEventListener("webglcontextlost", onLost);
+    canvas.addEventListener("webglcontextrestored", onRestored);
 
     const onMove = (e: PointerEvent) => {
       const r = canvas.getBoundingClientRect();
@@ -171,49 +239,46 @@ export default function Topo({
     };
     if (!reduced && !isCoarsePointer()) window.addEventListener("pointermove", onMove, { passive: true });
 
-    let raf = 0;
-    let visible = true;
-    const start = performance.now() - seed * 10000;
-    const draw = (now: number) => {
-      mouse.x += (mouse.tx - mouse.x) * 0.06;
-      mouse.y += (mouse.ty - mouse.y) * 0.06;
-      mouse.hill += (mouse.thill - mouse.hill) * 0.04;
-      gl.uniform1f(uTime, (now - start) / 1000);
-      gl.uniform2f(uMouse, mouse.x, mouse.y);
-      gl.uniform1f(uHill, mouse.hill);
-      gl.clearColor(0, 0, 0, 0);
-      gl.clear(gl.COLOR_BUFFER_BIT);
-      gl.drawArrays(gl.TRIANGLES, 0, 3);
-    };
-    const loop = (now: number) => {
-      draw(now);
-      if (visible) raf = requestAnimationFrame(loop);
-    };
+    const ro = new ResizeObserver(() => {
+      resize();
+      if (reduced) draw(start + 4000);
+    });
+    ro.observe(canvas);
 
-    if (reduced) {
-      draw(start + 4000);
-    } else {
-      const io = new IntersectionObserver(([entry]) => {
-        const was = visible;
-        visible = entry.isIntersecting && !document.hidden;
-        if (visible && !was) raf = requestAnimationFrame(loop);
-        if (!visible) cancelAnimationFrame(raf);
+    let io: IntersectionObserver | null = null;
+    const onVisibility = () => {
+      const was = visible;
+      visible = !document.hidden && inView;
+      if (visible && !was) play();
+      if (!visible) cancelAnimationFrame(raf);
+    };
+    let inView = true;
+    if (!reduced) {
+      io = new IntersectionObserver(([entry]) => {
+        inView = entry.isIntersecting;
+        onVisibility();
       });
       io.observe(canvas);
-      raf = requestAnimationFrame(loop);
-      return () => {
-        io.disconnect();
-        ro.disconnect();
-        cancelAnimationFrame(raf);
-        window.removeEventListener("pointermove", onMove);
-        gl.getExtension("WEBGL_lose_context")?.loseContext();
-      };
+      document.addEventListener("visibilitychange", onVisibility);
     }
+
+    if (build()) play();
+
     return () => {
+      disposed = true;
+      cancelAnimationFrame(raf);
+      io?.disconnect();
       ro.disconnect();
-      gl.getExtension("WEBGL_lose_context")?.loseContext();
+      document.removeEventListener("visibilitychange", onVisibility);
+      window.removeEventListener("pointermove", onMove);
+      canvas.removeEventListener("webglcontextlost", onLost);
+      canvas.removeEventListener("webglcontextrestored", onRestored);
+      // Free the GPU context right away rather than waiting for GC, so
+      // navigating between pages can't pile up contexts.
+      gl?.getExtension("WEBGL_lose_context")?.loseContext();
+      canvas.remove();
     };
   }, [color, alpha, scale, seed]);
 
-  return <canvas ref={canvasRef} aria-hidden className={`pointer-events-none absolute inset-0 h-full w-full ${className}`} />;
+  return <div ref={hostRef} aria-hidden className={`pointer-events-none absolute inset-0 h-full w-full ${className}`} />;
 }

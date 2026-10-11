@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* ── Brand tokens (sampled from the CreatorBay logo) ─────────────────────── */
+/* ── Brand tokens (sampled from the Creator Bay logo) ─────────────────────── */
 :root {
   --red: #fb3036;
   --red-deep: #d81e27;
@@ -126,7 +126,7 @@ html.lenis body {
 /* Film grain over everything; the references all carry texture. */
 .grain {
   position: fixed;
-  inset: -50%;
+  inset: -8%;
   z-index: 90;
   pointer-events: none;
   opacity: 0.07;

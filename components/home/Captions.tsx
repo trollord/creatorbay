@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { gsap, useGSAP, prefersReducedMotion } from "@/lib/gsap";
 
 const LINE =
-  "People skip ads. They don't skip the creators they follow. We put your brand in those feeds and turn that attention into footfall, bookings and sold-out nights.";
+  "People skip ads. They don't skip the creators they follow. We put your brand in those feeds and turn that attention into reach, sign-ups and sold-out events.";
 
 const fmt = (s: number) => `0:${String(Math.floor(s)).padStart(2, "0")}`;
 
@@ -26,16 +26,20 @@ export default function Captions() {
 
       if (prefersReducedMotion()) {
         spans.forEach((s) => (s.dataset.state = "past"));
-        gsap.set(bar, { scaleX: 1 });
+        bar.style.setProperty("--p", "1");
         time.textContent = fmt(DURATION);
         return;
       }
 
       let last = -2;
       const paint = (p: number) => {
-        const idx = Math.min(spans.length - 1, Math.floor(p * spans.length * 1.04) - 1);
-        bar.style.transform = `scaleX(${p})`;
-        time.textContent = fmt(p * DURATION);
+        // `pos` is the playhead in word units; the active word is floor(pos).
+        // The bar and clock follow the words read so far, so all three agree.
+        const pos = p * spans.length * 1.04 - 1;
+        const idx = Math.min(spans.length - 1, Math.floor(pos));
+        const read = Math.min(1, Math.max(0, (pos + 1) / spans.length));
+        bar.style.setProperty("--p", String(read));
+        time.textContent = fmt(read * DURATION);
         if (idx === last) return;
         last = idx;
         spans.forEach((s, i) => (s.dataset.state = i < idx ? "past" : i === idx ? "active" : "next"));
@@ -91,7 +95,7 @@ export default function Captions() {
 
       <div className="gutter pb-8 md:pb-10">
         <div className="h-[3px] w-full overflow-hidden rounded-full bg-paper/15">
-          <div data-bar className="h-full origin-left scale-x-0 rounded-full bg-red" />
+          <div data-bar className="h-full origin-left rounded-full bg-red [transform:scaleX(var(--p,0))]" />
         </div>
       </div>
     </section>

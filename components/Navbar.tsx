@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { gsap, useGSAP, prefersReducedMotion } from "@/lib/gsap";
+import { Menu, X } from "lucide-react";
 import { navLinks, contact, whatsappLink, instagramLink } from "@/lib/site";
 import { getLenis } from "@/components/motion/SmoothScroll";
 import BLogo from "@/components/BLogo";
@@ -80,9 +81,9 @@ export default function Navbar() {
               : `max-w-[1600px] py-2 pl-2 pr-1 ${open ? "text-ink" : "text-ink"}`
           }`}
         >
-          <Link href="/" aria-label="CreatorBay home" className="group flex items-center gap-2.5">
+          <Link href="/" aria-label="Creator Bay home" className="group flex items-center gap-2.5">
             <BLogo className="h-9 w-auto transition-transform duration-300 ease-out group-hover:-rotate-6" body={solid ? "#fb3036" : "#1d1d1d"} />
-            <span className="font-display text-[26px] leading-none tracking-[0.01em]">CreatorBay</span>
+            <span className="font-display text-[26px] leading-none tracking-[0.01em]">Creator Bay</span>
           </Link>
 
           <div className="hidden items-center gap-1 md:flex">
@@ -125,11 +126,23 @@ export default function Navbar() {
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
             aria-controls="mobile-menu"
-            className={`relative flex h-11 items-center gap-2 rounded-full px-4 text-[15px] font-semibold md:hidden ${
+            aria-label={open ? "Close menu" : "Open menu"}
+            className={`relative grid h-11 w-11 place-items-center rounded-full transition-transform duration-150 ease-out active:scale-[0.94] md:hidden ${
               solid ? "bg-red text-ink" : "bg-ink text-paper"
             }`}
           >
-            {open ? "Close" : "Menu"}
+            <Menu
+              size={22}
+              strokeWidth={2.4}
+              aria-hidden
+              className={`absolute transition-[opacity,transform] duration-200 ease-out ${open ? "scale-50 rotate-90 opacity-0" : "opacity-100"}`}
+            />
+            <X
+              size={22}
+              strokeWidth={2.4}
+              aria-hidden
+              className={`absolute transition-[opacity,transform] duration-200 ease-out ${open ? "opacity-100" : "scale-50 -rotate-90 opacity-0"}`}
+            />
           </button>
         </nav>
       </header>

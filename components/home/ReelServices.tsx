@@ -13,8 +13,9 @@ import { Scene, lightScenes } from "@/components/reels/Scenes";
 const HOLD = 0.55;
 
 /**
- * Services as a reels feed. Desktop: the phone pins and scroll swipes the feed.
- * Mobile: a horizontal, snap-scrolling row of reels.
+ * Services as a reels feed. One phone pins on every screen size and scrolling
+ * swipes the feed; the copy beside (or under) it switches in step. With reduced
+ * motion nothing pins and the reels are switched with the controls instead.
  */
 export default function ReelServices() {
   const root = useRef<HTMLElement>(null);
@@ -37,17 +38,11 @@ export default function ReelServices() {
   useGSAP(
     () => {
       const mm = gsap.matchMedia();
-      mm.add({ desktop: "(min-width: 768px)", reduce: "(prefers-reduced-motion: reduce)" }, (ctx) => {
-        const { desktop, reduce } = ctx.conditions as { desktop: boolean; reduce: boolean };
-        if (!desktop || reduce) {
-          setPinned(false);
-          tlRef.current = null;
-          return;
-        }
+      mm.add("(prefers-reduced-motion: no-preference)", () => {
         setPinned(true);
         const track = root.current!.querySelector<HTMLElement>("[data-track]")!;
         const fills = root.current!.querySelectorAll<HTMLElement>("[data-fill]");
-
+        
         // Read the scrubbed timeline's own time (not the trigger's), so the
         // copy switches exactly when the feed does.
         const tl = gsap.timeline({
@@ -55,7 +50,15 @@ export default function ReelServices() {
           onUpdate: () => {
             const t = tl.time();
             setActive(Math.min(n - 1, Math.floor(t + (1 - HOLD) / 2)));
-            fills.forEach((f, i) => (f.style.transform = `scaleX(${Math.min(1, Math.max(0, t - i))})`));
+            // Bar i fills over exactly the scroll range in which reel i is the
+            // active one, so it completes at the instant the next reel takes over.
+            const shift = (1 - HOLD) / 2;
+            fills.forEach((f) => {
+              const i = Number(f.dataset.i);
+              const from = i === 0 ? 0 : i - shift;
+              const to = i === n - 1 ? tl.duration() : i + 1 - shift;
+              f.style.setProperty("--p", String(Math.min(1, Math.max(0, (t - from) / (to - from)))));
+            });
           },
           scrollTrigger: {
             trigger: "[data-stage]",
@@ -73,6 +76,11 @@ export default function ReelServices() {
         tl.to({}, { duration: HOLD });
         tlRef.current = tl;
       });
+      // Reduced motion: leave the stage static, driven by the controls only.
+      mm.add("(prefers-reduced-motion: reduce)", () => {
+        setPinned(false);
+        tlRef.current = null;
+      });
       return () => mm.revert();
     },
     { scope: root }
@@ -84,15 +92,15 @@ export default function ReelServices() {
     <section ref={root} className="on-dark relative bg-ink text-paper" aria-label="Services">
       <div className="gutter pt-24 md:pt-32">
         <SplitReveal as="h2" by="lines" className="font-display max-w-[14ch] text-[clamp(3.2rem,8.5vw,9rem)]">
-          Six ways to get talked about.
+          Five ways to get talked about.
         </SplitReveal>
       </div>
 
-      {/* Desktop: pinned stage */}
-      <div data-stage className="relative hidden h-[100svh] items-center md:flex">
-        <div className="gutter grid w-full grid-cols-12 items-center gap-6">
-          <div className="col-span-5 min-h-[340px] pr-4">
-            <p className="mb-5 text-[14px] tabular text-paper/50">
+      {/* Pinned stage: phone on the right (desktop) or on top (mobile) */}
+      <div data-stage className="relative flex h-[100svh] min-h-[560px] items-center pb-5 pt-20 md:pb-0 md:pt-0">
+        <div className="gutter grid w-full grid-cols-[minmax(0,1fr)] items-center gap-4 md:grid-cols-12 md:gap-6">
+          <div className="order-2 min-w-0 md:order-1 md:col-span-5 md:min-h-[340px] md:pr-4">
+            <p className="mb-2 text-[13px] tabular text-paper/55 md:mb-5 md:text-[14px]">
               Reel {active + 1} of {n}
             </p>
             <div className="grid items-end overflow-hidden [&>*]:[grid-area:1/1]">
@@ -100,7 +108,7 @@ export default function ReelServices() {
                 <h3
                   key={s.slug}
                   aria-hidden={i !== active}
-                  className="font-display text-[clamp(2.8rem,4.6vw,5.4rem)] transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]"
+                  className="font-display min-w-0 text-[clamp(2rem,9.2vw,3rem)] md:text-[clamp(2.8rem,4.6vw,5.4rem)] transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]"
                   style={{
                     transform: `translateY(${i === active ? 0 : i < active ? -110 : 110}%)`,
                     opacity: i === active ? 1 : 0,
@@ -110,10 +118,14 @@ export default function ReelServices() {
                 </h3>
               ))}
             </div>
-            <p key={svc.slug} className="mt-6 max-w-[40ch] text-[17px] leading-relaxed text-paper/75 [animation:fadeUp_.6s_var(--ease-out)_both]">
-              {svc.description}
+            <p
+              key={svc.slug}
+              className="mt-3 max-w-[40ch] text-[15px] leading-snug text-paper/75 [animation:fadeUp_.6s_var(--ease-out)_both] md:mt-6 md:text-[17px] md:leading-relaxed"
+            >
+              <span className="md:hidden">{svc.short}</span>
+              <span className="hidden md:inline">{svc.description}</span>
             </p>
-            <ul key={`${svc.slug}-d`} className="mt-6 flex max-w-[44ch] flex-wrap gap-2">
+            <ul key={`${svc.slug}-d`} className="mt-6 hidden max-w-[44ch] flex-wrap gap-2 md:flex">
               {svc.deliverables.map((d, i) => (
                 <li
                   key={d}
@@ -124,10 +136,34 @@ export default function ReelServices() {
                 </li>
               ))}
             </ul>
+
+            {/* Mobile: step bar, also tappable */}
+            <ol className="mt-4 flex gap-1.5 md:hidden" aria-label="Reels">
+              {services.map((s, i) => (
+                <li key={s.slug} className="flex-1">
+                  <button
+                    type="button"
+                    onClick={() => goTo(i)}
+                    aria-current={i === active}
+                    aria-label={`Reel ${i + 1}: ${s.title}`}
+                    className="flex h-9 w-full items-center"
+                  >
+                    <span className="block h-[3px] w-full overflow-hidden rounded-full bg-paper/15">
+                      <span
+                        data-fill
+                        data-i={i}
+                        className="block h-full origin-left bg-red [transform:scaleX(var(--p,0))]"
+                        style={pinned ? undefined : ({ "--p": i === active ? 1 : 0 } as React.CSSProperties)}
+                      />
+                    </span>
+                  </button>
+                </li>
+              ))}
+            </ol>
           </div>
 
-          <div className="col-span-3 col-start-6 flex justify-center">
-            <Phone interactive className="h-[76svh] max-h-[740px]">
+          <div className="order-1 flex justify-center md:order-2 md:col-span-3 md:col-start-6">
+            <Phone interactive className="h-[min(46svh,430px)] md:h-[76svh] md:max-h-[740px]">
               <div data-track className="absolute inset-x-0 top-0" style={{ height: `${n * 100}%` }}>
                 {services.map((s, i) => (
                   <div key={s.slug} className="relative" style={{ height: `${100 / n}%` }}>
@@ -139,7 +175,7 @@ export default function ReelServices() {
             </Phone>
           </div>
 
-          <ol className="col-span-3 col-start-10 flex flex-col gap-4">
+          <ol className="order-3 hidden flex-col gap-4 md:col-span-3 md:col-start-10 md:flex">
             {services.map((s, i) => (
               <li key={s.slug}>
                 <button
@@ -150,7 +186,7 @@ export default function ReelServices() {
                 >
                   <span className="text-[17px] font-medium">{s.title}</span>
                   <span className="mt-2 block h-[2px] overflow-hidden rounded-full bg-paper/12">
-                    <span data-fill className={`block h-full origin-left bg-red ${pinned ? "scale-x-0" : i === active ? "scale-x-100" : "scale-x-0"}`} />
+                    <span data-fill data-i={i} className="block h-full origin-left bg-red [transform:scaleX(var(--p,0))]" style={pinned ? undefined : ({ "--p": i === active ? 1 : 0 } as React.CSSProperties)} />
                   </span>
                 </button>
               </li>
@@ -167,25 +203,10 @@ export default function ReelServices() {
         </div>
       </div>
 
-      {/* Mobile: swipeable reels */}
-      <div className="pb-20 pt-10 md:hidden">
-        <ul className="flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 [scrollbar-width:none]" aria-label="Services">
-          {services.map((s) => (
-            <li key={s.slug} className="w-[min(74vw,33svh)] shrink-0 snap-center">
-              <Phone className="w-full">
-                <Scene slug={s.slug} active />
-                <ReelOverlay caption={s.caption} likes={s.likes} light={lightScenes.has(s.slug)} />
-              </Phone>
-              <h3 className="font-display mt-5 text-[clamp(2.4rem,10vw,3.4rem)]">{s.title}</h3>
-              <p className="mt-2 text-[15px] leading-relaxed text-paper/75">{s.short}</p>
-            </li>
-          ))}
-        </ul>
-        <div className="px-4 pt-4">
-          <Link href="/services" className="inline-flex border-b-2 border-red pb-1 text-[15px] font-semibold">
-            All services in detail
-          </Link>
-        </div>
+      <div className="gutter pb-16 pt-2 md:hidden">
+        <Link href="/services" className="inline-flex border-b-2 border-red pb-1 text-[15px] font-semibold">
+          All services in detail
+        </Link>
       </div>
     </section>
   );

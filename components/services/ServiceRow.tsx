@@ -22,7 +22,7 @@ export default function ServiceRow({ service, flip }: { service: Service; flip: 
   }, []);
 
   return (
-    <article ref={ref} id={service.slug} className="gutter grid scroll-mt-24 items-center gap-12 py-20 md:grid-cols-12 md:gap-8 md:py-28">
+    <article ref={ref} id={service.slug} className="gutter grid scroll-mt-24 items-center gap-12 py-20 grid-cols-[minmax(0,1fr)] md:grid-cols-12 md:gap-8 md:py-28">
       <div className={`md:col-span-6 ${flip ? "md:order-2 md:col-start-7" : ""}`}>
         <SplitReveal as="h2" by="lines" className="font-display text-[clamp(3.4rem,7.4vw,8rem)]">
           {service.title}

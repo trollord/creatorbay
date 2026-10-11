@@ -24,10 +24,10 @@ export default function Footer() {
 
   return (
     <footer ref={ref} className="on-dark relative overflow-hidden bg-ink text-paper">
-      <div className="gutter grid gap-12 pt-20 pb-10 md:grid-cols-12 md:pt-28">
+      <div className="gutter grid gap-12 pt-20 pb-10 grid-cols-[minmax(0,1fr)] md:grid-cols-12 md:pt-28">
         <div className="md:col-span-5">
           <p className="max-w-[22ch] text-[28px] font-semibold leading-[1.1] md:text-[34px]">
-            Influencer marketing for brands, events and restaurants.
+            Influencer marketing for brands and events.
           </p>
           <a
             href={`mailto:${contact.email}`}
@@ -76,7 +76,7 @@ export default function Footer() {
       </div>
 
       <div className="gutter flex flex-col gap-3 border-t border-white/10 py-6 text-[13px] text-paper/50 md:flex-row md:items-center md:justify-between">
-        <p>© {new Date().getFullYear()} CreatorBay. Mumbai, India.</p>
+        <p>© {new Date().getFullYear()} Creator Bay. Mumbai, India.</p>
         <div className="flex gap-5">
           <Link href="/privacy-policy" className="transition-colors duration-200 hover:text-paper">
             Privacy policy
@@ -90,13 +90,17 @@ export default function Footer() {
       <p
         data-wordmark
         aria-hidden
-        className="font-display flex select-none justify-between overflow-hidden px-[1vw] pb-[1.5vw] text-[16.2vw] leading-[0.8] text-red"
+        className="font-display flex select-none justify-between overflow-hidden px-[1vw] pb-[1.5vw] text-[14.6vw] leading-[0.8] text-red"
       >
-        {"CREATORBAY".split("").map((c, i) => (
-          <span key={i} className="inline-block">
-            {c}
-          </span>
-        ))}
+        {"CREATOR BAY".split("").map((c, i) =>
+          c === " " ? (
+            <span key={i} className="inline-block w-[0.22em]" />
+          ) : (
+            <span key={i} className="inline-block">
+              {c}
+            </span>
+          )
+        )}
       </p>
     </footer>
   );

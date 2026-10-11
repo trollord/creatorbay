@@ -6,7 +6,17 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Environment, Lightformer } from "@react-three/drei";
 import { heroState } from "@/lib/heroState";
 
-/* ── Geometry: the CreatorBay "B", rebuilt from the logo ────────────────── */
+// R3F 9.8 still builds its store clock with the deprecated THREE.Clock, so three
+// warns on every mount. We never touch that clock (useFrame's delta/time come
+// from it internally), so drop only that message and pass the rest through.
+if (typeof window !== "undefined" && !THREE.getConsoleFunction()) {
+  THREE.setConsoleFunction((type, message, ...params) => {
+    if (type === "warn" && typeof message === "string" && message.includes("Clock: This module has been deprecated")) return;
+    console[type](message, ...params);
+  });
+}
+
+/* ── Geometry: the Creator Bay "B", rebuilt from the logo ────────────────── */
 
 // Outer silhouette: rounded slab with the B's waist notch on the right.
 function outerShape() {

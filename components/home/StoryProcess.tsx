@@ -40,7 +40,7 @@ export default function StoryProcess() {
               const i = Math.floor(v);
               setStep(i);
               el.style.setProperty("--sp", String(v - i));
-              fills.forEach((f, k) => (f.style.transform = `scaleX(${Math.min(1, Math.max(0, v - k))})`));
+              fills.forEach((f, k) => f.style.setProperty("--p", String(Math.min(1, Math.max(0, v - k)))));
             },
           },
         });
@@ -66,7 +66,7 @@ export default function StoryProcess() {
         <div className="flex gap-1.5" aria-hidden>
           {process.map((_, i) => (
             <span key={i} className="h-[5px] flex-1 overflow-hidden rounded-full bg-ink/25">
-              <span data-seg className={`block h-full origin-left bg-ink ${animated ? "scale-x-0" : ""}`} />
+              <span data-seg className="block h-full origin-left bg-ink [transform:scaleX(var(--p,0))]" style={animated ? undefined : ({ "--p": 1 } as React.CSSProperties)} />
             </span>
           ))}
         </div>
@@ -82,7 +82,7 @@ export default function StoryProcess() {
       </div>
 
       {animated ? (
-        <div className="gutter grid flex-1 content-center items-center gap-6 pb-[6svh] md:grid-cols-12 md:gap-8">
+        <div className="gutter grid flex-1 content-center items-center gap-6 pb-[6svh] grid-cols-[minmax(0,1fr)] md:grid-cols-12 md:gap-8">
           {/* Step number: outline, filled with ink as the step plays */}
           <div className="grid md:col-span-3 [&>*]:[grid-area:1/1]">
             {process.map((p, i) => (
@@ -118,7 +118,7 @@ export default function StoryProcess() {
           </div>
         </div>
       ) : (
-        <ol className="gutter mt-12 grid gap-10 md:grid-cols-2">
+        <ol className="gutter mt-12 grid gap-10 grid-cols-[minmax(0,1fr)] md:grid-cols-2">
           {process.map((p, i) => (
             <li key={p.title}>
               <span className="font-display text-[5rem] text-transparent [-webkit-text-stroke:2px_var(--ink)]">

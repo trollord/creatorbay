@@ -11,13 +11,13 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <Captions />
       <Profile />
       <ReelServices />
       <StoryProcess />
       <Receipts />
       <NicheMarquee />
       <GoLive />
+      <Captions />
     </>
   );
 }

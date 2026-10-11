@@ -12,9 +12,9 @@ import Magnetic from "@/components/motion/Magnetic";
 const BMark = dynamic(() => import("@/components/three/BMark"), { ssr: false });
 
 const notifications = [
-  { who: "mumbai.foodie", what: "tagged you in a reel", tone: "bg-red" },
+  { who: "mumbai.style", what: "tagged you in a reel", tone: "bg-red" },
   { who: "12,480 people", what: "liked your post", tone: "bg-ink" },
-  { who: "nightout.bom", what: "started following you", tone: "bg-red" },
+  { who: "the.fit.check", what: "started following you", tone: "bg-red" },
   { who: "Your reel", what: "is trending in Mumbai", tone: "bg-ink" },
   { who: "the.style.edit", what: "wants to collab", tone: "bg-red" },
 ];
@@ -195,7 +195,7 @@ export default function Hero() {
       {/* Double-tap target over the mark */}
       <button
         type="button"
-        aria-label={`Like CreatorBay, ${likes.toLocaleString("en-US")} likes`}
+        aria-label={`Like Creator Bay, ${likes.toLocaleString("en-US")} likes`}
         onDoubleClick={like}
         onPointerUp={onPointerUp}
         onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && (e.preventDefault(), like())}
@@ -224,11 +224,7 @@ export default function Hero() {
         </div>
 
         {/* Bottom row */}
-        <div className="absolute inset-x-0 bottom-0 flex flex-col gap-5 gutter pb-6 md:flex-row md:items-end md:justify-between md:pb-9">
-          <p data-hero-fade className="max-w-[34ch] text-[15px] leading-snug font-medium md:text-[17px]">
-            CreatorBay matches brands, events and restaurants with creators their audience already trusts. We run the
-            whole campaign, from the brief to the final report.
-          </p>
+        <div className="absolute inset-x-0 bottom-0 flex flex-col gap-5 gutter pb-6 md:flex-row md:items-end md:justify-end md:pb-9">
           <div data-hero-fade className="pointer-events-auto flex flex-wrap items-center gap-3">
             <Magnetic>
               <Link
@@ -239,7 +235,7 @@ export default function Hero() {
               </Link>
             </Magnetic>
             <a
-              href={whatsappLink("Hi CreatorBay! I'd like to talk about a campaign.")}
+              href={whatsappLink("Hi Creator Bay! I'd like to talk about a campaign.")}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex h-12 items-center rounded-full border-2 border-ink px-5 text-[15px] font-semibold transition-colors duration-200 hover:bg-ink hover:text-paper md:h-14 md:px-6"

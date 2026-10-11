@@ -6,21 +6,21 @@ import SplitReveal from "@/components/motion/SplitReveal";
 import DMForm from "@/components/contact/DMForm";
 
 export const metadata: Metadata = {
-  title: "Contact | CreatorBay",
-  description: "Start a campaign with CreatorBay. Message us on WhatsApp, email or Instagram and we'll reply within 24 hours.",
+  title: "Contact | Creator Bay",
+  description: "Start a campaign with Creator Bay. Message us on WhatsApp, email or Instagram and we'll reply within 24 hours.",
 };
 
 const channels = [
-  { label: "WhatsApp", value: contact.whatsappDisplay, href: whatsappLink("Hi CreatorBay! I'd like to talk about a campaign."), note: "Fastest for urgent campaigns" },
+  { label: "WhatsApp", value: contact.whatsappDisplay, href: whatsappLink("Hi Creator Bay! I'd like to talk about a campaign."), note: "Fastest for urgent campaigns" },
   { label: "Email", value: contact.email, href: `mailto:${contact.email}`, note: "For briefs and decks" },
   { label: "Instagram", value: `@${contact.instagram}`, href: instagramLink, note: "See what we're posting" },
 ];
 
 export default function ContactPage() {
   return (
-    <section className="relative overflow-hidden bg-red text-ink" aria-label="Contact CreatorBay">
+    <section className="relative overflow-hidden bg-red text-ink" aria-label="Contact Creator Bay">
       <Topo alpha={0.2} seed={5.6} />
-      <div className="gutter relative grid gap-14 pb-20 pt-36 md:grid-cols-12 md:gap-10 md:pb-28 md:pt-44">
+      <div className="gutter relative grid gap-14 pb-20 pt-36 grid-cols-[minmax(0,1fr)] md:grid-cols-12 md:gap-10 md:pb-28 md:pt-44">
         <div className="md:col-span-6">
           <p className="flex items-center gap-2 text-[15px] font-semibold">
             <span className="rec-dot h-2.5 w-2.5 rounded-full bg-ink" />

@@ -2,21 +2,20 @@ import type { Metadata } from "next";
 import LegalLayout, { Section, LegalContact } from "@/components/LegalLayout";
 
 export const metadata: Metadata = {
-  title: "Privacy policy | CreatorBay",
+  title: "Privacy policy | Creator Bay",
 };
 
 export default function PrivacyPolicyPage() {
   return (
     <LegalLayout
       title="Privacy policy"
-      intro="How CreatorBay collects, uses, and protects your information."
-      updated="May 15, 2026"
+      intro="How Creator Bay collects, uses, and protects your information."
       related={{ href: "/terms-and-conditions", label: "Terms & Conditions" }}
     >
       <Section title="1. Introduction">
                 <p>
-                  CreatorBay (&quot;we&quot;, &quot;our&quot;, &quot;us&quot;) is an influencer marketing
-                  agency that connects brands, events, and restaurants with creators. This Privacy Policy
+                  Creator Bay (&quot;we&quot;, &quot;our&quot;, &quot;us&quot;) is an influencer marketing
+                  agency that connects brands and events with creators. This Privacy Policy
                   explains how we collect, use, store, and share information when you visit our website,
                   contact us, or engage with our services, including communications over WhatsApp,
                   email, or phone.
@@ -70,7 +69,7 @@ export default function PrivacyPolicyPage() {
                   We use the WhatsApp Business Platform to communicate with clients and prospects who
                   have shared their phone number with us or initiated contact through WhatsApp. By
                   reaching out to us on WhatsApp or providing your number for WhatsApp follow-up, you
-                  consent to receive messages from CreatorBay related to your inquiry, your active
+                  consent to receive messages from Creator Bay related to your inquiry, your active
                   campaign, or service updates.
                 </p>
                 <p>

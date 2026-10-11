@@ -37,33 +37,6 @@ function CollabScene() {
   );
 }
 
-function RestaurantScene() {
-  const rows = [
-    ["Fri 7:30 pm", "Table for 4"],
-    ["Fri 8:00 pm", "Table for 2"],
-    ["Sat 8:30 pm", "Table for 6"],
-    ["Sat 9:00 pm", "Table for 2"],
-    ["Sun 1:00 pm", "Brunch for 8"],
-  ];
-  return (
-    <div className={`${s.scene} ${s.restaurant}`}>
-      <p className={`${s.boardTitle} font-display`}>This weekend</p>
-      <div>
-        {rows.map(([when, what]) => (
-          <div key={when} className={s.row}>
-            <span>
-              <b className="font-semibold">{when}</b>
-              <span className="opacity-60"> · {what}</span>
-            </span>
-            <span className={s.booked}>Booked</span>
-          </div>
-        ))}
-      </div>
-      <span className={`${s.full} font-display`}>Fully booked</span>
-    </div>
-  );
-}
-
 function ReelScene() {
   const [frames, setFrames] = useState(12 * 30 + 8);
   useEffect(() => {
@@ -141,7 +114,7 @@ function StrategyScene() {
       </svg>
       <div>
         <span className={s.chip}>400K reach</span>
-        <span className={s.chip}>3× bookings</span>
+        <span className={s.chip}>18% engagement</span>
         <span className={s.chip}>+12 creators</span>
       </div>
     </div>
@@ -151,7 +124,6 @@ function StrategyScene() {
 export const scenes: Record<ServiceScene, () => React.ReactElement> = {
   event: EventScene,
   collab: CollabScene,
-  restaurant: RestaurantScene,
   reel: ReelScene,
   production: ProductionScene,
   strategy: StrategyScene,

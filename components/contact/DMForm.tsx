@@ -11,7 +11,7 @@ type Fields = { name: string; brand: string; email: string; phone: string; servi
 
 function compose(f: Fields) {
   return [
-    `Hi CreatorBay! I'm ${f.name}${f.brand ? ` from ${f.brand}` : ""}.`,
+    `Hi Creator Bay! I'm ${f.name}${f.brand ? ` from ${f.brand}` : ""}.`,
     f.service ? `I'm interested in: ${f.service}.` : "",
     "",
     f.message,
