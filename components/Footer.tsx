@@ -76,7 +76,7 @@ export default function Footer() {
       </div>
 
       <div className="gutter flex flex-col gap-3 border-t border-white/10 py-6 text-[13px] text-paper/50 md:flex-row md:items-center md:justify-between">
-        <p>© {new Date().getFullYear()} Creator Bay. Mumbai, India.</p>
+        <p>© {new Date().getFullYear()} Creator Bay LLP. Mumbai, India.</p>
         <div className="flex gap-5">
           <Link href="/privacy-policy" className="transition-colors duration-200 hover:text-paper">
             Privacy policy
@@ -94,7 +94,7 @@ export default function Footer() {
       >
         {"CREATOR BAY".split("").map((c, i) =>
           c === " " ? (
-            <span key={i} className="inline-block w-[0.22em]" />
+            <span key={i} className="inline-block w-[0.32em]" />
           ) : (
             <span key={i} className="inline-block">
               {c}

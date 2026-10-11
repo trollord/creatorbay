@@ -83,7 +83,7 @@ export default function Navbar() {
         >
           <Link href="/" aria-label="Creator Bay home" className="group flex items-center gap-2.5">
             <BLogo className="h-9 w-auto transition-transform duration-300 ease-out group-hover:-rotate-6" body={solid ? "#fb3036" : "#1d1d1d"} />
-            <span className="font-display text-[26px] leading-none tracking-[0.01em]">Creator Bay</span>
+            <span className="font-display text-[26px] leading-none tracking-[0.01em] [word-spacing:0.22em]">Creator Bay</span>
           </Link>
 
           <div className="hidden items-center gap-1 md:flex">
