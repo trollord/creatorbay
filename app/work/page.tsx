@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { stats } from "@/lib/site";
 import PageHero from "@/components/PageHero";
 import Receipts from "@/components/home/Receipts";
-import NicheMarquee from "@/components/home/NicheMarquee";
+import BrandMarquee from "@/components/home/BrandMarquee";
 import GoLive from "@/components/home/GoLive";
 import Odometer from "@/components/motion/Odometer";
 
@@ -32,7 +32,7 @@ export default function WorkPage() {
         </dl>
       </section>
       <Receipts showHeading={false} />
-      <NicheMarquee />
+      <BrandMarquee />
       <GoLive title="You could be next." />
     </>
   );
