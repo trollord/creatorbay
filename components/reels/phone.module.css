@@ -1,0 +1,146 @@
+/* Silver iPhone 17 Pro Max in CSS 3D. Sizes are in cqw of the phone. */
+
+.phone {
+  position: relative;
+  aspect-ratio: 78 / 163.4;
+  container-type: inline-size;
+  perspective: 2200px;
+}
+
+.float {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  animation: bob 6s ease-in-out infinite;
+}
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-1.4%); }
+}
+
+.body {
+  --gx: 50;
+  --r: 15.5cqw;
+  --depth: 11.2cqw;
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Contact shadow on the "floor" behind the phone */
+.shadow {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: -5%;
+  height: 10%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(0, 0, 0, 0.55), transparent);
+  transform: translateZ(calc(var(--depth) * -1.6)) rotateX(80deg);
+  filter: blur(8px);
+}
+
+/* ── Edge ─────────────────────────────────────────────────────────────── */
+.slice {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--r);
+  transform: translateZ(calc(var(--depth) / -14 * var(--k)));
+  /* brushed aluminium, lit from the upper left */
+  background:
+    linear-gradient(90deg, #a9aab0 0%, #f2f2f5 9%, #d8d9de 22%, #c9cacf 50%, #e9e9ed 78%, #fafafc 91%, #a5a6ac 100%);
+  box-shadow: inset 0 0 0 0.4cqw rgba(255, 255, 255, 0.35);
+}
+.back {
+  /* the back: frosted white glass */
+  background: linear-gradient(160deg, #f4f4f6, #dcdce0);
+}
+
+.btn {
+  position: absolute;
+  width: 1.6cqw;
+  border-radius: 1cqw;
+  background: linear-gradient(90deg, #9fa0a6, #f5f5f7 45%, #c7c8cd);
+}
+.action { left: -0.9cqw; top: 17%; height: 6%; }
+.volUp { left: -0.9cqw; top: 25.5%; height: 9.5%; }
+.volDown { left: -0.9cqw; top: 37%; height: 9.5%; }
+.power { right: -0.9cqw; top: 27%; height: 14%; }
+.camera { right: -0.75cqw; top: 58%; height: 9%; width: 1.3cqw; background: linear-gradient(90deg, #8d8e94, #d9dade 50%, #8d8e94); }
+
+/* ── Front ────────────────────────────────────────────────────────────── */
+.front {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--r);
+  padding: 1.3cqw;
+  transform: translateZ(0.2px);
+  /* polished chamfer of the rim */
+  background:
+    linear-gradient(135deg, #ffffff 0%, #d6d7dc 18%, #f7f7f9 40%, #c3c4c9 62%, #fbfbfd 82%, #b9babf 100%);
+  box-shadow:
+    0 0 0 0.25cqw rgba(0, 0, 0, 0.08),
+    inset 0 0 0.6cqw rgba(0, 0, 0, 0.25);
+}
+
+.bezel {
+  height: 100%;
+  border-radius: calc(var(--r) - 1.3cqw);
+  background: #050505;
+  padding: 2.2cqw;
+  box-shadow: inset 0 0 0 0.35cqw #1a1a1a;
+}
+
+.screen {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  border-radius: calc(var(--r) - 3.5cqw);
+  background: #1d1d1d;
+  container-type: size;
+  /* keep the 3D context from flattening scene children oddly */
+  transform: translateZ(0);
+}
+
+.island {
+  position: absolute;
+  z-index: 10;
+  left: 50%;
+  top: 1.7cqh;
+  width: 31cqw;
+  height: 4.2cqh;
+  transform: translateX(-50%);
+  border-radius: 99px;
+  background: #000;
+}
+.island span {
+  position: absolute;
+  right: 12%;
+  top: 50%;
+  width: 3.4cqh;
+  height: 3.4cqh;
+  transform: translateY(-50%) scale(0.55);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #2b3550, #05070c 60%);
+}
+
+/* Glass glare that slides with the tilt */
+.glare {
+  position: absolute;
+  inset: 0;
+  z-index: 11;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent calc(var(--gx) * 1% - 30%),
+    rgba(255, 255, 255, 0.16) calc(var(--gx) * 1% - 6%),
+    rgba(255, 255, 255, 0.05) calc(var(--gx) * 1% + 4%),
+    transparent calc(var(--gx) * 1% + 22%)
+  );
+  mix-blend-mode: screen;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .float { animation: none; }
+}

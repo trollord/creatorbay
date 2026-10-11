@@ -1,170 +1,103 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
-import { Share2, MessageCircle, Mail } from "lucide-react";
-
-const footerLinks = [
-  { name: "Home", href: "/" },
-  { name: "About", href: "/about" },
-  { name: "Services", href: "/services" },
-  { name: "Work", href: "/work" },
-  { name: "Contact", href: "/contact" },
-];
+import { useRef } from "react";
+import { gsap, useGSAP, prefersReducedMotion } from "@/lib/gsap";
+import { navLinks, contact, whatsappLink, instagramLink } from "@/lib/site";
 
 export default function Footer() {
+  const ref = useRef<HTMLElement>(null);
+
+  useGSAP(
+    () => {
+      if (prefersReducedMotion()) return;
+      gsap.from("[data-wordmark] span", {
+        yPercent: 100,
+        ease: "expo.out",
+        duration: 1.3,
+        stagger: 0.045,
+        scrollTrigger: { trigger: "[data-wordmark]", start: "top 95%", once: true },
+      });
+    },
+    { scope: ref }
+  );
+
   return (
-    <footer
-      className="relative border-t"
-      style={{ borderColor: "rgba(255,255,255,0.06)", background: "#080808" }}
-    >
-      {/* Top glow */}
-      <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-px"
-        style={{ background: "linear-gradient(90deg, transparent, #8b5cf6, #ec4899, transparent)" }}
-      />
-
-      <div className="max-w-6xl mx-auto px-6 py-16">
-        <div className="grid md:grid-cols-3 gap-12 mb-12">
-          {/* Brand */}
-          <div>
-            <Link href="/" className="flex items-center gap-2 mb-4">
-              <div className="rounded-xl overflow-hidden flex-shrink-0" style={{ padding: "3px", background: "rgba(255,255,255,0.06)" }}>
-                <Image
-                  src="/logo.jpg"
-                  alt="CreatorBay"
-                  width={40}
-                  height={40}
-                  className="rounded-lg block"
-                  style={{ objectFit: "cover" }}
-                />
-              </div>
-              <span className="font-bold text-xl text-white">
-                Creator<span style={{ color: "#8b5cf6" }}>Bay</span>
-              </span>
-            </Link>
-            <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.4)" }}>
-              Influencer Marketing That Drives Reach, Relevance &amp; Results.
-            </p>
-          </div>
-
-          {/* Links */}
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-widest mb-5" style={{ color: "rgba(255,255,255,0.25)" }}>
-              Navigation
-            </p>
-            <nav className="flex flex-col gap-3">
-              {footerLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="text-sm transition-colors duration-200 hover:text-white"
-                  style={{ color: "rgba(255,255,255,0.45)" }}
-                >
-                  {link.name}
-                </Link>
-              ))}
-            </nav>
-          </div>
-
-          {/* Contact */}
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-widest mb-5" style={{ color: "rgba(255,255,255,0.25)" }}>
-              Get In Touch
-            </p>
-            <div className="flex flex-col gap-4">
-              <a
-                href="mailto:hello@creatorbaymedia.net"
-                className="flex items-center gap-3 text-sm transition-colors duration-200 hover:text-white group"
-                style={{ color: "rgba(255,255,255,0.45)" }}
-              >
-                <div
-                  className="w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-200 group-hover:scale-110"
-                  style={{ background: "rgba(139,92,246,0.15)", border: "1px solid rgba(139,92,246,0.2)" }}
-                >
-                  <Mail size={14} color="#8b5cf6" />
-                </div>
-                hello@creatorbaymedia.net
-              </a>
-              <a
-                href="https://wa.me/9967562434"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 text-sm transition-colors duration-200 hover:text-white group"
-                style={{ color: "rgba(255,255,255,0.45)" }}
-              >
-                <div
-                  className="w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-200 group-hover:scale-110"
-                  style={{ background: "rgba(37,211,102,0.1)", border: "1px solid rgba(37,211,102,0.2)" }}
-                >
-                  <MessageCircle size={14} color="#25d366" />
-                </div>
-                Chat on WhatsApp
-              </a>
-              <a
-                href="https://instagram.com/creatorbay.media"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 text-sm transition-colors duration-200 hover:text-white group"
-                style={{ color: "rgba(255,255,255,0.45)" }}
-              >
-                <div
-                  className="w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-200 group-hover:scale-110"
-                  style={{ background: "rgba(236,72,153,0.1)", border: "1px solid rgba(236,72,153,0.2)" }}
-                >
-                  <Share2 size={14} color="#ec4899" />
-                </div>
-                @creatorbay.media
-              </a>
-            </div>
-          </div>
+    <footer ref={ref} className="on-dark relative overflow-hidden bg-ink text-paper">
+      <div className="gutter grid gap-12 pt-20 pb-10 md:grid-cols-12 md:pt-28">
+        <div className="md:col-span-5">
+          <p className="max-w-[22ch] text-[28px] font-semibold leading-[1.1] md:text-[34px]">
+            Influencer marketing for brands, events and restaurants.
+          </p>
+          <a
+            href={`mailto:${contact.email}`}
+            className="mt-8 inline-block border-b-2 border-red pb-1 text-[18px] font-medium transition-colors duration-200 hover:text-red"
+          >
+            {contact.email}
+          </a>
         </div>
 
-        <div
-          className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4"
-          style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}
-        >
-          <p className="text-xs" style={{ color: "rgba(255,255,255,0.2)" }}>
-            © 2025 CreatorBay. All rights reserved.
-          </p>
-          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
-            <Link
-              href="/privacy-policy"
-              className="text-xs transition-colors duration-200 hover:text-white"
-              style={{ color: "rgba(255,255,255,0.4)" }}
-            >
-              Privacy Policy
-            </Link>
-            <Link
-              href="/terms-and-conditions"
-              className="text-xs transition-colors duration-200 hover:text-white"
-              style={{ color: "rgba(255,255,255,0.4)" }}
-            >
-              Terms &amp; Conditions
-            </Link>
-          </div>
-          <div className="flex gap-4">
-            <a
-              href="https://instagram.com/creatorbay.media"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
-              style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.08)" }}
-            >
-              <Share2 size={14} color="rgba(255,255,255,0.5)" />
-            </a>
-            <a
-              href="https://wa.me/9967562434"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110"
-              style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.08)" }}
-            >
-              <MessageCircle size={14} color="rgba(255,255,255,0.5)" />
-            </a>
-          </div>
+        <nav aria-label="Footer" className="md:col-span-3 md:col-start-7">
+          <p className="mb-4 text-[13px] text-paper/45">Pages</p>
+          <ul className="flex flex-col gap-2 text-[17px]">
+            <li>
+              <Link href="/" className="transition-colors duration-200 hover:text-red">Home</Link>
+            </li>
+            {navLinks.map((l) => (
+              <li key={l.href}>
+                <Link href={l.href} className="transition-colors duration-200 hover:text-red">
+                  {l.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div className="md:col-span-3">
+          <p className="mb-4 text-[13px] text-paper/45">Talk to us</p>
+          <ul className="flex flex-col gap-2 text-[17px]">
+            <li>
+              <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className="transition-colors duration-200 hover:text-red">
+                WhatsApp
+              </a>
+            </li>
+            <li>
+              <a href={instagramLink} target="_blank" rel="noopener noreferrer" className="transition-colors duration-200 hover:text-red">
+                Instagram
+              </a>
+            </li>
+            <li>
+              <a href={`mailto:${contact.email}`} className="transition-colors duration-200 hover:text-red">
+                Email
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
+
+      <div className="gutter flex flex-col gap-3 border-t border-white/10 py-6 text-[13px] text-paper/50 md:flex-row md:items-center md:justify-between">
+        <p>© {new Date().getFullYear()} CreatorBay. Mumbai, India.</p>
+        <div className="flex gap-5">
+          <Link href="/privacy-policy" className="transition-colors duration-200 hover:text-paper">
+            Privacy policy
+          </Link>
+          <Link href="/terms-and-conditions" className="transition-colors duration-200 hover:text-paper">
+            Terms &amp; conditions
+          </Link>
+        </div>
+      </div>
+
+      <p
+        data-wordmark
+        aria-hidden
+        className="font-display flex select-none justify-between overflow-hidden px-[1vw] pb-[1.5vw] text-[16.2vw] leading-[0.8] text-red"
+      >
+        {"CREATORBAY".split("").map((c, i) => (
+          <span key={i} className="inline-block">
+            {c}
+          </span>
+        ))}
+      </p>
     </footer>
   );
 }

@@ -1,23 +1,39 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import { Archivo } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import SmoothScroll from "@/components/motion/SmoothScroll";
+
+const archivo = Archivo({
+  subsets: ["latin"],
+  axes: ["wdth"],
+  variable: "--font-archivo",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
-  title: "CreatorBay — Influencer Marketing Agency",
+  title: "CreatorBay | Influencer Marketing Agency in Mumbai",
   description:
-    "CreatorBay connects brands, events, and restaurants with the right creators — building campaigns that drive real reach, deep engagement, and measurable results.",
+    "CreatorBay matches brands, events and restaurants with creators their customers already follow, then runs the campaign from brief to report.",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+export const viewport: Viewport = {
+  themeColor: "#fb3036",
+};
+
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className="h-full">
-      <body className="min-h-full flex flex-col bg-[#0a0a0a] text-white antialiased">
+    <html lang="en" className={archivo.variable} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+      </head>
+      <body className="min-h-full bg-ink">
+        <SmoothScroll />
         <Navbar />
-        <main className="flex-1">{children}</main>
+        <main>{children}</main>
         <Footer />
+        <div className="grain" aria-hidden />
       </body>
     </html>
   );

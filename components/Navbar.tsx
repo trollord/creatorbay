@@ -1,228 +1,170 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
-
-interface NavbarCtx {
-  scrolled: boolean;
-  mobileOpen: boolean;
-  setMobileOpen: (v: boolean) => void;
-}
-
-const NavbarContext = createContext<NavbarCtx>({
-  scrolled: false,
-  mobileOpen: false,
-  setMobileOpen: () => {},
-});
-
-const useNavbar = () => useContext(NavbarContext);
-
-const navItems = [
-  { name: "Home", link: "/" },
-  { name: "About", link: "/about" },
-  { name: "Services", link: "/services" },
-  { name: "Work", link: "/work" },
-  { name: "Contact", link: "/contact" },
-];
+import { useEffect, useRef, useState } from "react";
+import { gsap, useGSAP, prefersReducedMotion } from "@/lib/gsap";
+import { navLinks, contact, whatsappLink, instagramLink } from "@/lib/site";
+import { getLenis } from "@/components/motion/SmoothScroll";
+import BLogo from "@/components/BLogo";
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
+  const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  // The menu belongs to the page it was opened on, so navigating closes it.
+  const [openOn, setOpenOn] = useState<string | null>(null);
+  const open = openOn === pathname;
+  const setOpen = (v: boolean | ((o: boolean) => boolean)) =>
+    setOpenOn((typeof v === "function" ? v(open) : v) ? pathname : null);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const lastY = useRef(0);
 
   useEffect(() => {
-    const handler = () => {
-      setScrolled(window.scrollY > 40);
-      if (window.scrollY > 40) setMobileOpen(false);
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 40);
+      setHidden(y > 240 && y > lastY.current + 2);
+      if (y < lastY.current - 2) setHidden(false);
+      lastY.current = y;
     };
-    window.addEventListener("scroll", handler, { passive: true });
-    handler();
-    return () => window.removeEventListener("scroll", handler);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const active = scrolled || mobileOpen;
+  useEffect(() => {
+    const lenis = getLenis();
+    if (open) lenis?.stop();
+    else lenis?.start();
+    document.documentElement.style.overflow = open ? "hidden" : "";
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpenOn(null);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
+
+  useGSAP(
+    () => {
+      const el = menuRef.current;
+      if (!el) return;
+      if (prefersReducedMotion()) {
+        gsap.set(el, { autoAlpha: open ? 1 : 0 });
+        return;
+      }
+      if (open) {
+        gsap.timeline()
+          .set(el, { autoAlpha: 1 })
+          .fromTo(el, { clipPath: "inset(0 0 100% 0)" }, { clipPath: "inset(0 0 0% 0)", duration: 0.7, ease: "expo.out" })
+          .from("[data-menu-link]", { yPercent: 110, duration: 0.8, stagger: 0.06, ease: "expo.out" }, 0.1)
+          .from("[data-menu-foot]", { autoAlpha: 0, y: 16, duration: 0.5 }, 0.35);
+      } else {
+        gsap.to(el, { clipPath: "inset(0 0 100% 0)", duration: 0.45, ease: "power3.in", onComplete: () => gsap.set(el, { autoAlpha: 0 }) });
+      }
+    },
+    { dependencies: [open], scope: menuRef }
+  );
+
+  const solid = scrolled && !open;
 
   return (
-    <NavbarContext.Provider value={{ scrolled, mobileOpen, setMobileOpen }}>
-      <div
-        className="fixed top-0 left-0 right-0 z-50 flex justify-center transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]"
-        style={{ padding: scrolled ? "10px 20px 0" : "0" }}
+    <>
+      <header
+        className="fixed inset-x-0 top-0 z-[80] flex justify-center px-3 pt-3 transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] md:px-5 md:pt-4"
+        style={{ transform: hidden && !open ? "translateY(-120%)" : "translateY(0)" }}
       >
-        <div
-          className="w-full transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)]"
-          style={{
-            maxWidth: scrolled ? "min(960px, calc(100vw - 40px))" : "100%",
-            borderRadius: scrolled ? "2rem" : mobileOpen ? "1.25rem" : "0",
-            background: scrolled
-              ? "rgba(10,10,10,0.92)"
-              : mobileOpen
-              ? "rgba(15,15,15,0.98)"
-              : "transparent",
-            boxShadow: active
-              ? "0 8px 40px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.06)"
-              : "none",
-            backdropFilter: scrolled ? "blur(20px)" : "none",
-            overflow: "hidden",
-          }}
+        <nav
+          aria-label="Main"
+          className={`flex w-full items-center justify-between rounded-full transition-[max-width,background-color,padding,box-shadow] duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] ${
+            solid
+              ? "max-w-[1080px] bg-ink/92 py-2 pl-3 pr-2 text-paper shadow-[0_14px_40px_rgba(0,0,0,0.25)] ring-1 ring-white/10 backdrop-blur-md"
+              : `max-w-[1600px] py-2 pl-2 pr-1 ${open ? "text-ink" : "text-ink"}`
+          }`}
         >
-          {/* Desktop nav */}
-          <div className="hidden md:flex items-center justify-between px-6 lg:px-8 h-[64px]">
-            <NavLogo scrolled={scrolled} />
-            <nav className="flex items-center gap-7">
-              {navItems.map((item) => {
-                const isActive = pathname === item.link;
-                return (
-                  <Link
-                    key={item.link}
-                    href={item.link}
-                    className="text-sm font-medium relative group transition-colors duration-200"
-                    style={{ color: isActive ? "#fff" : "rgba(255,255,255,0.55)" }}
-                  >
-                    {item.name}
-                    <span
-                      className="absolute -bottom-0.5 left-0 h-px transition-all duration-300"
-                      style={{
-                        width: isActive ? "100%" : "0",
-                        background: "linear-gradient(90deg, #8b5cf6, #ec4899)",
-                      }}
-                    />
-                    {!isActive && (
-                      <span
-                        className="absolute -bottom-0.5 left-0 h-px w-0 group-hover:w-full transition-all duration-300"
-                        style={{ background: "linear-gradient(90deg, #8b5cf6, #ec4899)" }}
-                      />
-                    )}
-                  </Link>
-                );
-              })}
-            </nav>
+          <Link href="/" aria-label="CreatorBay home" className="group flex items-center gap-2.5">
+            <BLogo className="h-9 w-auto transition-transform duration-300 ease-out group-hover:-rotate-6" body={solid ? "#fb3036" : "#1d1d1d"} />
+            <span className="font-display text-[26px] leading-none tracking-[0.01em]">CreatorBay</span>
+          </Link>
+
+          <div className="hidden items-center gap-1 md:flex">
+            {navLinks.map((l) => {
+              const active = pathname === l.href;
+              return (
+                <Link
+                  key={l.href}
+                  href={l.href}
+                  aria-current={active ? "page" : undefined}
+                  className="group relative rounded-full px-4 py-2 text-[15px] font-medium"
+                >
+                  <span className="relative inline-block overflow-hidden align-top">
+                    <span className="block transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:-translate-y-full">
+                      {l.name}
+                    </span>
+                    <span className="absolute inset-0 block translate-y-full transition-transform duration-300 ease-[cubic-bezier(0.23,1,0.32,1)] group-hover:translate-y-0">
+                      {l.name}
+                    </span>
+                  </span>
+                  {active && (
+                    <span className={`absolute bottom-0.5 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full ${solid ? "bg-red" : "bg-ink"}`} />
+                  )}
+                </Link>
+              );
+            })}
             <Link
               href="/contact"
-              className="text-sm font-semibold px-5 py-2 rounded-full transition-all duration-200 hover:opacity-90 hover:scale-105"
-              style={{
-                background: "linear-gradient(135deg, #8b5cf6, #ec4899)",
-                color: "#fff",
-              }}
+              className={`ml-2 inline-flex h-11 items-center gap-2 rounded-full px-5 text-[15px] font-semibold transition-[transform,background-color] duration-200 ease-out active:scale-[0.97] ${
+                solid ? "bg-red text-ink hover:bg-paper" : "bg-ink text-paper hover:bg-ink-2"
+              }`}
             >
-              Work With Us
+              <span className="rec-dot h-2 w-2 rounded-full bg-current" />
+              Start a campaign
             </Link>
           </div>
 
-          {/* Mobile nav */}
-          <div className="md:hidden">
-            <div className="flex items-center justify-between px-5 h-[60px]">
-              <NavLogo scrolled={scrolled} />
-              <button
-                onClick={() => setMobileOpen(!mobileOpen)}
-                aria-label="Toggle menu"
-                className="p-2 rounded-lg focus:outline-none"
-              >
-                <div className="w-5 h-4 flex flex-col justify-between">
-                  <span
-                    className="block h-0.5 w-full rounded-full transition-all duration-300 origin-center"
-                    style={{
-                      background: "rgba(255,255,255,0.8)",
-                      transform: mobileOpen ? "rotate(45deg) translateY(7px)" : "none",
-                    }}
-                  />
-                  <span
-                    className="block h-0.5 w-full rounded-full transition-all duration-300"
-                    style={{
-                      background: "rgba(255,255,255,0.8)",
-                      opacity: mobileOpen ? 0 : 1,
-                    }}
-                  />
-                  <span
-                    className="block h-0.5 w-full rounded-full transition-all duration-300 origin-center"
-                    style={{
-                      background: "rgba(255,255,255,0.8)",
-                      transform: mobileOpen ? "rotate(-45deg) translateY(-7px)" : "none",
-                    }}
-                  />
-                </div>
-              </button>
-            </div>
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            className={`relative flex h-11 items-center gap-2 rounded-full px-4 text-[15px] font-semibold md:hidden ${
+              solid ? "bg-red text-ink" : "bg-ink text-paper"
+            }`}
+          >
+            {open ? "Close" : "Menu"}
+          </button>
+        </nav>
+      </header>
 
-            <AnimatePresence>
-              {mobileOpen && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.3, ease: "easeInOut" }}
-                  className="overflow-hidden"
-                >
-                  <div
-                    className="flex flex-col gap-1 px-5 pb-6 pt-3"
-                    style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}
-                  >
-                    {navItems.map((item, i) => (
-                      <motion.div
-                        key={item.link}
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: i * 0.05 }}
-                      >
-                        <Link
-                          href={item.link}
-                          onClick={() => setMobileOpen(false)}
-                          className="block py-3 text-sm font-medium text-white/70 hover:text-white transition-colors"
-                        >
-                          {item.name}
-                        </Link>
-                      </motion.div>
-                    ))}
-                    <motion.div
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: navItems.length * 0.05 }}
-                      className="mt-2"
-                    >
-                      <Link
-                        href="/contact"
-                        onClick={() => setMobileOpen(false)}
-                        className="block w-full text-center py-3 rounded-full text-sm font-semibold text-white"
-                        style={{ background: "linear-gradient(135deg, #8b5cf6, #ec4899)" }}
-                      >
-                        Work With Us
-                      </Link>
-                    </motion.div>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+      <div
+        ref={menuRef}
+        id="mobile-menu"
+        className="invisible fixed inset-0 z-[70] flex flex-col justify-between bg-red px-5 pb-8 pt-28 text-ink md:hidden"
+        aria-hidden={!open}
+      >
+        <ul className="flex flex-col">
+          {[{ name: "Home", href: "/" }, ...navLinks].map((l) => (
+            <li key={l.href} className="overflow-hidden">
+              <Link
+                data-menu-link
+                href={l.href}
+                tabIndex={open ? 0 : -1}
+                className="font-display block py-1 text-[19vw] leading-[0.9]"
+              >
+                {l.name}
+                {pathname === l.href && <span className="ml-3 inline-block h-4 w-4 rounded-full bg-ink align-middle" />}
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <div data-menu-foot className="flex flex-col gap-2 text-[15px] font-medium">
+          <a href={`mailto:${contact.email}`} tabIndex={open ? 0 : -1}>{contact.email}</a>
+          <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" tabIndex={open ? 0 : -1}>
+            WhatsApp {contact.whatsappDisplay}
+          </a>
+          <a href={instagramLink} target="_blank" rel="noopener noreferrer" tabIndex={open ? 0 : -1}>
+            @{contact.instagram}
+          </a>
         </div>
       </div>
-    </NavbarContext.Provider>
-  );
-}
-
-function NavLogo({ scrolled }: { scrolled: boolean }) {
-  return (
-    <Link href="/" className="flex items-center gap-2 group shrink-0">
-      <div
-        className="rounded-lg overflow-hidden flex-shrink-0 transition-all duration-300"
-        style={{
-          background: scrolled ? "rgba(255,255,255,0.08)" : "rgba(255,255,255,0.06)",
-          padding: "3px",
-        }}
-      >
-        <Image
-          src="/logo.jpg"
-          alt="CreatorBay"
-          width={34}
-          height={34}
-          className="rounded-md block"
-          style={{ objectFit: "cover" }}
-        />
-      </div>
-      <span className="font-bold text-lg tracking-tight text-white">
-        Creator<span style={{ color: "#8b5cf6" }}>Bay</span>
-      </span>
-    </Link>
+    </>
   );
 }
