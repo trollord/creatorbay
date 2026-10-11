@@ -1,29 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { useRef } from "react";
-import { gsap, useGSAP, prefersReducedMotion } from "@/lib/gsap";
+import FooterWordmark from "@/components/FooterWordmark";
 import { navLinks, contact, whatsappLink, instagramLink } from "@/lib/site";
 
 export default function Footer() {
-  const ref = useRef<HTMLElement>(null);
-
-  useGSAP(
-    () => {
-      if (prefersReducedMotion()) return;
-      gsap.from("[data-wordmark] span", {
-        yPercent: 100,
-        ease: "expo.out",
-        duration: 1.3,
-        stagger: 0.045,
-        scrollTrigger: { trigger: "[data-wordmark]", start: "top 95%", once: true },
-      });
-    },
-    { scope: ref }
-  );
-
   return (
-    <footer ref={ref} className="on-dark relative overflow-hidden bg-ink text-paper">
+    <footer className="on-dark relative overflow-hidden bg-ink text-paper">
       <div className="gutter grid gap-12 pt-20 pb-10 grid-cols-[minmax(0,1fr)] md:grid-cols-12 md:pt-28">
         <div className="md:col-span-5">
           <p className="max-w-[22ch] text-[28px] font-semibold leading-[1.1] md:text-[34px]">
@@ -87,21 +70,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <p
-        data-wordmark
-        aria-hidden
-        className="font-display flex select-none justify-between overflow-hidden px-[1vw] pb-[1.5vw] text-[14.6vw] leading-[0.8] text-red"
-      >
-        {"CREATOR BAY".split("").map((c, i) =>
-          c === " " ? (
-            <span key={i} className="inline-block w-[0.32em]" />
-          ) : (
-            <span key={i} className="inline-block">
-              {c}
-            </span>
-          )
-        )}
-      </p>
+      <FooterWordmark />
     </footer>
   );
 }

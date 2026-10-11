@@ -121,16 +121,60 @@ function StrategyScene() {
   );
 }
 
+function WebsiteScene() {
+  return (
+    <div className={`${s.scene} ${s.website}`}>
+      <div className={s.browser}>
+        <div className={s.urlBar}>
+          <span className={s.dots}>
+            <i />
+            <i />
+            <i />
+          </span>
+          <span className={s.url}>
+            <span className={s.urlText}>yourbrand.com</span>
+          </span>
+          <span className={s.speed}>0.9s</span>
+        </div>
+        <div className={s.page}>
+          <div className={`${s.block} ${s.heroBlock} font-display`}>
+            New
+            <br />
+            drop.
+          </div>
+          <div className={`${s.block} ${s.lines}`}>
+            <i />
+            <i />
+          </div>
+          <div className={`${s.block} ${s.cta}`}>Book a call</div>
+          <div className={`${s.block} ${s.cards}`}>
+            <i />
+            <i />
+          </div>
+        </div>
+      </div>
+      <svg className={s.cursor} viewBox="0 0 24 24" aria-hidden>
+        <path d="M4 2l15 9.5-6.6 1.4L9 20z" />
+      </svg>
+      <div className={s.toast}>
+        <span className={s.toastDot} />
+        New enquiry · via @mumbai.style
+      </div>
+    </div>
+  );
+}
+
 export const scenes: Record<ServiceScene, () => React.ReactElement> = {
   event: EventScene,
   collab: CollabScene,
   reel: ReelScene,
   production: ProductionScene,
   strategy: StrategyScene,
+  website: WebsiteScene,
 };
 
 /** Scenes with a light background need dark app chrome on top. */
-export const lightScenes = new Set<ServiceScene>(["production", "strategy"]);
+export const lightScenes = new Set<ServiceScene>(["production", "strategy", "website"]);
 
 /** Renders a scene; remounts on activation so its CSS animations replay. */
 export function Scene({ slug, active }: { slug: ServiceScene; active: boolean }) {
