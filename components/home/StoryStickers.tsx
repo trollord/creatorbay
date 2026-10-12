@@ -9,7 +9,7 @@ const light = "bg-paper text-ink";
 
 function Question() {
   return (
-    <div className={`${card} ${light} -rotate-3 overflow-hidden`}>
+    <div className={`${card} ${light} -rotate-3 isolate overflow-hidden`}>
       <p className="bg-ink px-5 pb-4 pt-5 text-center text-[15px] font-semibold text-paper">Ask us anything</p>
       <p className="px-5 py-5 text-center text-[17px] font-medium text-ink/55">What does success look like for you?</p>
     </div>
@@ -21,14 +21,14 @@ function Poll() {
     <div className={`${card} ${light} rotate-2 p-5`}>
       <p className="text-center text-[17px] font-semibold">Who fits the brand?</p>
       <div className="mt-4 flex flex-col gap-2.5 text-[15px] font-semibold">
-        <div className="relative overflow-hidden rounded-xl bg-fog px-4 py-3">
+        <div className="relative isolate overflow-hidden rounded-xl bg-fog [clip-path:inset(0_round_12px)] px-4 py-3">
           <span className="absolute inset-y-0 left-0 w-[78%] origin-left bg-red [animation:grow_.9s_var(--ease-out)_.2s_both]" />
           <span className="relative flex justify-between">
             <span>@mumbai.style</span>
             <span>78%</span>
           </span>
         </div>
-        <div className="relative overflow-hidden rounded-xl bg-fog px-4 py-3 text-ink/60">
+        <div className="relative isolate overflow-hidden rounded-xl bg-fog [clip-path:inset(0_round_12px)] px-4 py-3 text-ink/60">
           <span className="absolute inset-y-0 left-0 w-[22%] origin-left bg-ink/15 [animation:grow_.9s_var(--ease-out)_.3s_both]" />
           <span className="relative flex justify-between">
             <span>@random.reach</span>

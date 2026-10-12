@@ -101,6 +101,11 @@
   container-type: size;
   /* keep the 3D context from flattening scene children oddly */
   transform: translateZ(0);
+  /* iOS/Android WebKit ignore overflow:hidden + border-radius for animated or
+     composited children inside a 3D context, so clip explicitly as well. */
+  isolation: isolate;
+  clip-path: inset(0 round calc(var(--r) - 3.5cqw));
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
 }
 
 .island {
