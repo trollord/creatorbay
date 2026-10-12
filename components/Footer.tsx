@@ -60,6 +60,21 @@ export default function Footer() {
 
       <div className="gutter flex flex-col gap-3 border-t border-white/10 py-6 text-[13px] text-paper/50 md:flex-row md:items-center md:justify-between">
         <p>© {new Date().getFullYear()} Creator Bay LLP. Mumbai, India.</p>
+        <p className="flex items-center gap-1.5">
+          Crafted with
+          <svg aria-hidden="true" viewBox="0 0 24 24" className="h-3.5 w-3.5 fill-red">
+            <path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 2.7 5 6 5c2 0 3.4 1.1 4.2 2.4h3.6C14.6 6.1 16 5 18 5c3.3 0 5.1 3.4 3.6 6.8C19.5 16.4 12 21 12 21z" />
+          </svg>
+          by
+          <a
+            href="https://www.bytelights.co/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="border-b border-paper/30 pb-px font-medium text-paper/80 transition-colors duration-200 hover:border-red hover:text-red"
+          >
+            Bytelights
+          </a>
+        </p>
         <div className="flex gap-5">
           <Link href="/privacy-policy" className="transition-colors duration-200 hover:text-paper">
             Privacy policy
